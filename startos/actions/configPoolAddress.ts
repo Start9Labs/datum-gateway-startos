@@ -40,7 +40,13 @@ export const configPoolAddress = sdk.Action.withInput(
   inputSpec,
 
   // optionally pre-fill form
-  async ({ effects }) => {},
+  async ({ effects }) => {
+    await ensureConfigFile(effects)
+    const config = await configJson.read().const(effects)
+    if (!config) throw new Error('Config file does not exist')
+    
+    return {address: config.mining?.pool_address || '',}
+  },
 
   // execution function
   async ({ effects, input }) => {

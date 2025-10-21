@@ -3,7 +3,7 @@ import { stratumPort, uiPort } from './utils'
 
 export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   // UI
-  const uiMulti = sdk.MultiHost.of(effects, 'ui-multi')
+  const uiMulti = sdk.MultiHost.of(effects, 'main')
   const uiMultiOrigin = await uiMulti.bindPort(uiPort, {
     protocol: 'http',
   })
@@ -21,7 +21,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   const uiReceipt = await uiMultiOrigin.export([ui])
 
   // Stratum
-  const stratumMulti = sdk.MultiHost.of(effects, 'stratum-multi')
+  const stratumMulti = sdk.MultiHost.of(effects, 'mining')
   const stratumMultiOrigin = await stratumMulti.bindPort(stratumPort, {
     protocol: null,
     addSsl: null,

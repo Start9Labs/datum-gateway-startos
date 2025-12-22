@@ -3,7 +3,7 @@ import { sdk } from './sdk'
 import { stratumPort, uiPort, dataDir } from './utils'
 import { manifest } from 'bitcoin-knots/startos/manifest'
 
-export const main = sdk.setupMain(async ({ effects, started }) => {
+export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting Datum Gateway...')
   
   const conf = await configJson.read().const(effects)
@@ -11,7 +11,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     throw new Error('datum config file not found')
   }
 
-  return sdk.Daemons.of(effects, started)
+  return sdk.Daemons.of(effects)
     .addDaemon('primary', {
       subcontainer: await sdk.SubContainer.of(
         effects,

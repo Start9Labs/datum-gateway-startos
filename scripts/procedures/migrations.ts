@@ -81,7 +81,25 @@ export const migration: T.ExpectedExports.migration =
           true,
           { version: "0.3.1", type: "down"}
         )
+      },
+      "0.3.3": {
+        up: compat.migrations.updateConfig(
+          (config: any) => {
+            config.api.allow_insecure_auth = false;
+            return config;
+          },
+          true,
+          { version: "0.3.3", type: "up"}
+        ),
+        down: compat.migrations.updateConfig(
+          (config: any) => {
+            delete config.api.allow_insecure_auth;
+            return config;
+          },
+          true,
+          { version: "0.3.3", type: "down"}
+        )
       }
     },
-    "0.3.2"
+    "0.3.3"
   );

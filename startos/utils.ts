@@ -42,6 +42,7 @@ export const configDefaults = {
   },
   api: {
     admin_password: '',
+    allow_insecure_auth: false,
     listen_port: uiPort, // 0 = disabled
     listen_addr: '', // blank defaults to all
     modify_conf: false,

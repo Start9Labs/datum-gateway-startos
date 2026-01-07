@@ -328,6 +328,12 @@ export const inputSpec = InputSpec.of({
         placeholder: null,
         immutable: true,
       }),
+      allow_insecure_auth: Value.toggle({
+        name: 'Allow Insecure Authentication',
+        default: false,
+        description: 'Allow insecure authentication (required for Safari)',
+        warning: 'This lowers security of the dashboard login. Use it only on trusted networks.',
+      })
     }),
   ),
   logger: Value.object(

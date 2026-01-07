@@ -46,6 +46,7 @@ export const configJsonShape = object({
     coinbase_unique_id: number.onMismatch(mining.coinbase_unique_id),
   }),
   api: object({
+    allow_insecure_auth: boolean.onMismatch(api.allow_insecure_auth),
     listen_port: literal(api.listen_port).onMismatch(api.listen_port),
     listen_addr: string.onMismatch(api.listen_addr),
     admin_password: string.onMismatch(api.admin_password),

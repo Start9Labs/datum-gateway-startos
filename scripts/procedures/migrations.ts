@@ -70,6 +70,24 @@ export const migration: T.ExpectedExports.migration =
           { version: "0.2.2.1", type: "down"}
         )
       },
+      "0.2.6": {
+        up: compat.migrations.updateConfig(
+          (config: any) => {
+            config.api.allow_insecure_auth = false;
+            return config;
+          },
+          true,
+          { version: "0.2.6", type: "up"}
+        ),
+        down: compat.migrations.updateConfig(
+          (config: any) => {
+            delete config.api.allow_insecure_auth;
+            return config;
+          },
+          true,
+          { version: "0.2.6", type: "down"}
+        )
+      },
       "0.3.1": {
         up: compat.migrations.updateConfig(
           migrate_022_to_024,
@@ -83,5 +101,5 @@ export const migration: T.ExpectedExports.migration =
         )
       }
     },
-    "0.2.5"
+    "0.2.6"
   );

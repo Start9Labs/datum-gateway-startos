@@ -1,5 +1,6 @@
 import { matches, FileHelper } from '@start9labs/start-sdk'
 import { configDefaults, dataDir } from '../utils'
+import { sdk } from '../sdk'
 
 const { object, string, number, boolean, dictionary, literal } = matches
 
@@ -74,7 +75,7 @@ export const configJsonShape = object({
 
 export const configJson = FileHelper.json(
   {
-    volumeId: 'main',
+    base: sdk.volumes.main,
     subpath: `${dataDir}/datum_gateway_config.json`,
   },
   configJsonShape,

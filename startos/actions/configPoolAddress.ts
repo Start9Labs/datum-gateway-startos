@@ -3,19 +3,20 @@ import {
   configJson,
   ensureConfigFile,
 } from '../fileModels/datum_gateway_config.json'
+import { i18n } from '../i18n'
 const { InputSpec, Value } = sdk
 
 export const inputSpec = InputSpec.of({
   address: Value.dynamicText(async ({ effects }) => {
     return {
-      name: 'Address',
-      description: 'The Bitcoin address to use for pooled/lotto mining',
+      name: i18n('Address'),
+      description: i18n('The Bitcoin address to use for pooled/lotto mining'),
       required: true,
       default: null,
       patterns: [
         {
           regex: '^[a-zA-Z0-9]+$',
-          description: 'Must be alphanumeric.',
+          description: i18n('Must be alphanumeric.'),
         },
       ],
     }
@@ -28,8 +29,8 @@ export const configPoolAddress = sdk.Action.withInput(
 
   // metadata
   async ({ effects }) => ({
-    name: 'Config pool address',
-    description: 'Config the pool address to mine on.',
+    name: i18n('Config pool address'),
+    description: i18n('Config the pool address to mine on.'),
     warning: null,
     allowedStatuses: 'any',
     group: 'Config',
@@ -60,8 +61,8 @@ export const configPoolAddress = sdk.Action.withInput(
 
     return {
       version: '1',
-      title: 'Sucess',
-      message: `Bitcoin address set.`,
+      title: i18n('Sucess'),
+      message: i18n('Bitcoin address set.'),
       result: null,
     }
   },

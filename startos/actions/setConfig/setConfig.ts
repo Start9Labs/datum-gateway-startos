@@ -4,6 +4,7 @@ import {
   ensureConfigFile,
 } from '../../fileModels/datum_gateway_config.json'
 import { inputSpec } from './spec'
+import { i18n } from '../../i18n'
 
 type OutputType = {
   username_modifiers: {
@@ -26,8 +27,8 @@ export const setConfig = sdk.Action.withInput(
 
   // metadata
   async ({ effects }) => ({
-    name: 'Set Config',
-    description: 'Set configuration options for Datum',
+    name: i18n('Set Config'),
+    description: i18n('Set configuration options for Datum'),
     warning: null,
     allowedStatuses: 'any',
     group: 'Config',

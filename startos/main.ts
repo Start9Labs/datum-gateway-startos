@@ -2,6 +2,7 @@ import { configJson } from './fileModels/datum_gateway_config.json'
 import { sdk } from './sdk'
 import { stratumPort, uiPort, dataDir } from './utils'
 import { manifest } from 'bitcoin-knots/startos/manifest'
+import { i18n } from './i18n'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting Datum Gateway...')
@@ -40,23 +41,23 @@ export const main = sdk.setupMain(async ({ effects }) => {
         ],
       },
       ready: {
-        display: 'Web Interface',
+        display: i18n('Web Interface'),
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, uiPort, {
-            successMessage: 'The Datum Gateway dashboard is ready',
-            errorMessage: 'The Datum Gateway dashboard is not ready',
+            successMessage: i18n('The Datum Gateway dashboard is ready'),
+            errorMessage: i18n('The Datum Gateway dashboard is not ready'),
           }),
       },
       requires: [],
     })
     .addHealthCheck('stratum-interface', {
       ready: {
-        display: 'Stratum Interface',
+        display: i18n('Stratum Interface'),
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, stratumPort, {
             timeout: 1000,
-            successMessage: `Stratum server is available`,
-            errorMessage: `Stratum server is unavailable`,
+            successMessage: i18n('Stratum server is available'),
+            errorMessage: i18n('Stratum server is unavailable'),
           }),
       },
       requires: ['primary'],

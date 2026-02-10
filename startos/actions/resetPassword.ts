@@ -5,6 +5,7 @@ import {
   configJson,
   ensureConfigFile,
 } from '../fileModels/datum_gateway_config.json'
+import { i18n } from '../i18n'
 
 export const resetPassword = sdk.Action.withoutInput(
   // id
@@ -16,11 +17,9 @@ export const resetPassword = sdk.Action.withoutInput(
       .read((c) => c.api.admin_password)
       .const(effects))
 
-    const desc = 'your admin password'
-
     return {
-      name: hasPass ? 'Reset Password' : 'Create Password',
-      description: hasPass ? `Reset ${desc}` : `Create ${desc}`,
+      name: hasPass ? i18n('Reset Password') : i18n('Create Password'),
+      description: hasPass ? i18n('Reset your admin password') : i18n('Create your admin password'),
       warning: null,
       allowedStatuses: 'any',
       group: 'Config',
@@ -38,8 +37,8 @@ export const resetPassword = sdk.Action.withoutInput(
 
     return {
       version: '1',
-      title: 'Success',
-      message: 'Your new password is below',
+      title: i18n('Success'),
+      message: i18n('Your new password is below'),
       result: {
         type: 'single',
         value: admin_password,

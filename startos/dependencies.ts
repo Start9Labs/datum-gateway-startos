@@ -1,3 +1,4 @@
+import { i18n } from './i18n'
 import { sdk } from './sdk'
 import { otherConfig } from 'bitcoin-knots/startos/actions/config/other'
 
@@ -10,7 +11,7 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
       },
     },
     when: { condition: 'input-not-matches', once: false },
-    reason: 'Datum requires a particular blocknotify url',
+    reason: i18n('Datum requires a particular blocknotify url'),
   })
 
   return {

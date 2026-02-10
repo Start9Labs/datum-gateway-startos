@@ -1,3 +1,4 @@
+import { i18n } from './i18n'
 import { sdk } from './sdk'
 import { stratumPort, uiPort } from './utils'
 
@@ -8,9 +9,9 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
     protocol: 'http',
   })
   const ui = sdk.createInterface(effects, {
-    name: 'Web UI',
+    name: i18n('Web UI'),
     id: 'ui',
-    description: 'The web interface of Datum Gateway',
+    description: i18n('The web interface of Datum Gateway'),
     type: 'ui',
     masked: false,
     schemeOverride: null,
@@ -29,9 +30,9 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
     secure: { ssl: false },
   })
   const stratum = sdk.createInterface(effects, {
-    name: 'Stratum Server',
+    name: i18n('Stratum Server'),
     id: 'stratum',
-    description: 'Point your ASICs here!',
+    description: i18n('Point your ASICs here!'),
     type: 'api',
     masked: false,
     schemeOverride: null,

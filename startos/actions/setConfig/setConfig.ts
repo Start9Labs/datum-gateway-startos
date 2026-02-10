@@ -74,7 +74,7 @@ export const setConfig = sdk.Action.withInput(
       const addressMap: { [address: string]: number } = {}
 
       modifier.addresses.forEach(({ address, split }) => {
-        addressMap[address] = split
+        addressMap[address ?? ""] = split
       })
 
       stratumOutput.username_modifiers[modifier.name] = addressMap
@@ -92,6 +92,12 @@ export const setConfig = sdk.Action.withInput(
       if (input.datum.pool_host === '') {
         output.datum.pool_host = 'datum-beta1.mine.ocean.xyz'
       }
+    }
+
+    const currentConfig = await configJson.read().const(effects)
+    if (currentConfig) {
+      currentConfig.stratum.username_modifiers = {}
+      await configJson.write(effects, currentConfig)
     }
 
     configJson.merge(effects, output)

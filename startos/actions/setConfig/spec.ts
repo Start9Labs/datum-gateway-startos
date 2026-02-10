@@ -213,11 +213,11 @@ export const inputSpec = InputSpec.of({
                     spec: InputSpec.of({
                       address: Value.text({
                         name: i18n('Bitcoin address'),
-                        required: true,
+                        required: false,
                         default: null,
                         patterns: [
                           {
-                            regex: '[0-9a-zA-Z]{20,88}',
+                            regex: '[0-9a-zA-Z]{0,88}',
                             description: i18n('Must be a valid Bitcoin address.'),
                           },
                         ],

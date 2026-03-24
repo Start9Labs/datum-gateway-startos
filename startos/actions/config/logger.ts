@@ -27,7 +27,7 @@ const inputSpec = InputSpec.of({
     name: i18n('Log File'),
     required: false,
     default: null,
-    placeholder: '/root/start9/logs.txt',
+    placeholder: '/root/logs.txt',
     description: i18n('Path to file to write log messages, when enabled'),
   }),
   log_level_file: Value.number({

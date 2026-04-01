@@ -4,6 +4,7 @@ import { configJson } from './fileModels/datum_gateway_config.json'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
 import { dataDir, knotsMountpoint, stratumPort, uiPort } from './utils'
+import { error } from 'console'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting Datum Gateway...')
@@ -70,4 +71,34 @@ export const main = sdk.setupMain(async ({ effects }) => {
       },
       requires: ['datum'],
     })
+    .addHealthCheck('stratum-clients-connected', {
+      ready: {
+        display: i18n('Number of Stratum Clients Connected'),
+        trigger: sdk.trigger.cooldownTrigger(10000),
+        fn: async () => {
+          try {
+            const { stdout } = await datumSub.exec([
+              'sh',
+              '-c',
+              `curl -s 127.0.0.1:7152 | grep -A1 "Total Work Subscriptions" | tail -n 1 | sed 's/[^0-9]*//g'`,
+            ])
+            const num = stdout.toString().trim()
+            if (num) {
+              return {
+                result: 'success',
+                message: i18n('Connected Clients: ${num}', { num }),
+              }
+            } else {
+              throw new Error()
+            }
+          } catch (e) {
+            return {
+              result: 'success',
+              message: i18n('Couldn\'t fetch the number of clients'),
+            }
+          }
+        },
+      },
+    requires: ['datum'],
+  })
 })

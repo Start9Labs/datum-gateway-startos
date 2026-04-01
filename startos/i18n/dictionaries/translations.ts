@@ -8,6 +8,9 @@ export default {
     3: 'Interface Stratum',
     4: 'Le serveur Stratum est disponible',
     5: "Le serveur Stratum n'est pas disponible",
+    6: 'Nombre de clients Stratum connectés',
+    7: 'Clients connectés: ${num}',
+    8: 'Impossible de récuperer le nombre de client',
 
     // interfaces.ts
     20: 'Interface Web',

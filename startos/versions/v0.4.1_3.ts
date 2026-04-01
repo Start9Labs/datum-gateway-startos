@@ -2,8 +2,8 @@ import { IMPOSSIBLE, VersionInfo, YAML } from '@start9labs/start-sdk'
 import { readFile, rm } from 'fs/promises'
 import { configJson } from '../fileModels/datum_gateway_config.json'
 
-export const v_0_4_1_2_b7 = VersionInfo.of({
-  version: '0.4.1:2-beta.7',
+export const v_0_4_1_3 = VersionInfo.of({
+  version: '0.4.1:3',
   releaseNotes: {
     en_US:
       'Strip rpcuser/rpcpassword from config to force cookie auth for bitcoind RPC',

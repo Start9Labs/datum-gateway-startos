@@ -143,8 +143,9 @@ const inputSpec = InputSpec.of({
                     required: true,
                     default: null,
                     integer: false,
+                    step: 0.01,
                     min: 0,
-                    max: 1,
+                    max: 100,
                   }),
                 }),
               },
@@ -170,8 +171,32 @@ export const stratumConfig = sdk.Action.withInput(
 
   inputSpec,
 
-  async ({ effects }) => configJson.read((c) => c?.stratum).const(effects),
+  async ({ effects }) => {
+    const stratum = await configJson.read((c) => c?.stratum).const(effects)
+    if (!stratum) return stratum
+    return {
+      ...stratum,
+      username_modifiers: stratum.username_modifiers.map((modifier) => ({
+        ...modifier,
+        addresses: modifier.addresses.map((a) => ({
+          ...a,
+          split: parseFloat((a.split * 100).toFixed(10)),
+        })),
+      })),
+    }
+  },
 
-  ({ effects, input }) =>
-    configJson.merge(effects, { stratum: utils.nullToUndefined(input) }),
+  async ({ effects, input }) => {
+    const transformed = {
+      ...input,
+      username_modifiers: input.username_modifiers.map((modifier) => ({
+        ...modifier,
+        addresses: modifier.addresses.map((a) => ({
+          ...a,
+          split: a.split !== null ? parseFloat((a.split / 100).toFixed(10)) : null,
+        })),
+      })),
+    }
+    await configJson.merge(effects, { stratum: utils.nullToUndefined(transformed) })
+  }
 )

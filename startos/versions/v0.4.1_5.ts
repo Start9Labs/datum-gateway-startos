@@ -2,8 +2,8 @@ import { IMPOSSIBLE, VersionInfo, YAML } from '@start9labs/start-sdk'
 import { readFile, rm } from 'fs/promises'
 import { configJson } from '../fileModels/datum_gateway_config.json'
 
-export const v_0_4_1_4 = VersionInfo.of({
-  version: '0.4.1:4',
+export const v_0_4_1_5 = VersionInfo.of({
+  version: '0.4.1:5',
   releaseNotes: {
     en_US: 'Internal updates (start-sdk 1.2.0)',
     es_ES: 'Actualizaciones internas (start-sdk 1.2.0)',

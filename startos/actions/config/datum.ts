@@ -1,7 +1,7 @@
+import { utils } from '@start9labs/start-sdk'
 import { configJson } from '../../fileModels/datum_gateway_config.json'
 import { i18n } from '../../i18n'
 import { sdk } from '../../sdk'
-import { nullToUndefined } from '../../utils'
 
 const { InputSpec, Value } = sdk
 
@@ -112,7 +112,7 @@ export const datumConfig = sdk.Action.withInput(
           : (input.pool_host ?? undefined)
 
     await configJson.merge(effects, {
-      datum: nullToUndefined({
+      datum: utils.nullToUndefined({
         ...input,
         pool_host,
         pooled_mining_only: sharing === 'require',

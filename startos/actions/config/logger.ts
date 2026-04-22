@@ -1,7 +1,7 @@
+import { utils } from '@start9labs/start-sdk'
 import { configJson } from '../../fileModels/datum_gateway_config.json'
 import { i18n } from '../../i18n'
 import { sdk } from '../../sdk'
-import { nullToUndefined } from '../../utils'
 
 const { InputSpec, Value } = sdk
 
@@ -59,5 +59,5 @@ export const loggerConfig = sdk.Action.withInput(
   async ({ effects }) => configJson.read((c) => c?.logger).const(effects),
 
   ({ effects, input }) =>
-    configJson.merge(effects, { logger: nullToUndefined(input) }),
+    configJson.merge(effects, { logger: utils.nullToUndefined(input) }),
 )

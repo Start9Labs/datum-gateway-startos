@@ -2,19 +2,14 @@ import { IMPOSSIBLE, VersionInfo, YAML } from '@start9labs/start-sdk'
 import { readFile, rm } from 'fs/promises'
 import { configJson } from '../fileModels/datum_gateway_config.json'
 
-export const v_0_4_1_3 = VersionInfo.of({
-  version: '0.4.1:3',
+export const v_0_4_1_4 = VersionInfo.of({
+  version: '0.4.1:4',
   releaseNotes: {
-    en_US:
-      'Strip rpcuser/rpcpassword from config to force cookie auth for bitcoind RPC',
-    es_ES:
-      'Eliminar rpcuser/rpcpassword de la configuración para forzar autenticación por cookie en bitcoind RPC',
-    de_DE:
-      'rpcuser/rpcpassword aus der Konfiguration entfernen, um Cookie-Authentifizierung für bitcoind-RPC zu erzwingen',
-    pl_PL:
-      'Usuń rpcuser/rpcpassword z konfiguracji, aby wymusić uwierzytelnianie cookie dla bitcoind RPC',
-    fr_FR:
-      "Supprimer rpcuser/rpcpassword de la configuration pour forcer l'authentification par cookie pour bitcoind RPC",
+    en_US: 'Internal updates (start-sdk 1.2.0)',
+    es_ES: 'Actualizaciones internas (start-sdk 1.2.0)',
+    de_DE: 'Interne Aktualisierungen (start-sdk 1.2.0)',
+    pl_PL: 'Aktualizacje wewnętrzne (start-sdk 1.2.0)',
+    fr_FR: 'Mises à jour internes (start-sdk 1.2.0)',
   },
   migrations: {
     up: async ({ effects }) => {

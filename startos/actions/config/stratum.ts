@@ -1,8 +1,8 @@
+import { utils } from '@start9labs/start-sdk'
 import { List } from '@start9labs/start-sdk/base/lib/actions/input/builder'
 import { configJson } from '../../fileModels/datum_gateway_config.json'
 import { i18n } from '../../i18n'
 import { sdk } from '../../sdk'
-import { nullToUndefined } from '../../utils'
 
 const { InputSpec, Value } = sdk
 
@@ -172,5 +172,5 @@ export const stratumConfig = sdk.Action.withInput(
   async ({ effects }) => configJson.read((c) => c?.stratum).const(effects),
 
   ({ effects, input }) =>
-    configJson.merge(effects, { stratum: nullToUndefined(input) }),
+    configJson.merge(effects, { stratum: utils.nullToUndefined(input) }),
 )

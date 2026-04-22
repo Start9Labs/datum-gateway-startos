@@ -1,7 +1,7 @@
+import { utils } from '@start9labs/start-sdk'
 import { configJson } from '../../fileModels/datum_gateway_config.json'
 import { i18n } from '../../i18n'
 import { sdk } from '../../sdk'
-import { nullToUndefined } from '../../utils'
 
 const { InputSpec, Value } = sdk
 
@@ -38,5 +38,5 @@ export const bitcoindConfig = sdk.Action.withInput(
   async ({ effects }) => configJson.read((c) => c?.bitcoind).const(effects),
 
   ({ effects, input }) =>
-    configJson.merge(effects, { bitcoind: nullToUndefined(input) }),
+    configJson.merge(effects, { bitcoind: utils.nullToUndefined(input) }),
 )

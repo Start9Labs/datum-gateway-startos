@@ -12,7 +12,7 @@ export default {
     7: 'Clients connectés: ${num}',
     8: 'Impossible de récuperer le nombre de client',
     9: 'Hashrate estimé',
-    10: 'hashrate estimé: ${num} Th/s',
+    10: 'Hashrate estimé: ${num} Th/s',
     11: 'Impossible de récuperer le hashrate',
 
     // interfaces.ts
@@ -84,6 +84,7 @@ export default {
     235: 'Adresse Bitcoin',
     236: 'Doit être une addresse Bitcoin valide',
     237: "Pourcentage attribué à l'adresse",
+    239: "La somme de tous les pourcentages d'adresses doit être égale à 100.",
     238: 'Réglages du minage',
     240: 'Adresse Bitcoin',
     241: 'Adresse Bitcoin utilisée pour le minage sur DATUM Pool et pour les récompenses de minage en solo.',
@@ -92,7 +93,7 @@ export default {
     244: 'Tag secondaire de la coinbase',
     245: 'Text présent dans le tag secondaire, si vous minez en pool, cela sera le nom du bloc',
     246: 'ID unique de la coinbase',
-    247: "Un identifiant unique compris entre 1 et 65535. Il doit être unique pour chaque instance de DATUM ayant les mêmes étiquettes coinbase.",
+    247: 'Un identifiant unique compris entre 1 et 65535. Il doit être unique pour chaque instance de DATUM ayant les mêmes étiquettes coinbase.',
     248: 'API',
     249: 'Paramètres du tableau de bord Datum Gateway',
     251: "Autoriser l'authentification non sécurisée",

@@ -10,10 +10,10 @@ const dict = {
   'Stratum server is unavailable': 5,
   'Number of Stratum Clients Connected': 6,
   'Connected Clients: ${num}': 7,
-  'Couldn\'t fetch the number of clients': 8,
+  "Couldn't fetch the number of clients": 8,
   'Estimated Hashrate': 9,
   'Estimated Hashrate: ${num} Th/s': 10,
-  'Couldn\'t fetch the hashrate': 11,
+  "Couldn't fetch the hashrate": 11,
 
   // interfaces.ts
   'Web UI': 20,
@@ -84,6 +84,7 @@ const dict = {
   'Bitcoin address': 235,
   'Must be a valid Bitcoin address.': 236,
   'Address split percentage': 237,
+  'The sum of all address splits must be equal to 100.': 239,
   'Mining Settings': 238,
   'Bitcoin Address': 240,
   'Bitcoin address used for mining on DATUM Pool, and for solo mining rewards.': 241,

@@ -67,9 +67,7 @@ const inputSpec = InputSpec.of({
   }),
   vardiff_quickdiff_count: Value.number({
     name: i18n('Difficulty Update Speed'),
-    description: i18n(
-      'How many shares before considering a quick diff update',
-    ),
+    description: i18n('How many shares before considering a quick diff update'),
     required: false,
     default: null,
     placeholder: '8',
@@ -139,7 +137,9 @@ const inputSpec = InputSpec.of({
                   }),
                   split: Value.number({
                     name: i18n('Address split percentage'),
-                    warning: 'The sum of all address splits must be equal to 100.',
+                    warning: i18n(
+                      'The sum of all address splits must be equal to 100.',
+                    ),
                     required: true,
                     default: null,
                     integer: false,
@@ -193,10 +193,13 @@ export const stratumConfig = sdk.Action.withInput(
         ...modifier,
         addresses: modifier.addresses.map((a) => ({
           ...a,
-          split: a.split !== null ? parseFloat((a.split / 100).toFixed(10)) : null,
+          split:
+            a.split !== null ? parseFloat((a.split / 100).toFixed(10)) : null,
         })),
       })),
     }
-    await configJson.merge(effects, { stratum: utils.nullToUndefined(transformed) })
-  }
+    await configJson.merge(effects, {
+      stratum: utils.nullToUndefined(transformed),
+    })
+  },
 )

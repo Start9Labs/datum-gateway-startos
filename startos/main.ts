@@ -98,13 +98,13 @@ export const main = sdk.setupMain(async ({ effects }) => {
           }
         },
       },
-    requires: ['datum'],
-  })
-  .addHealthCheck('estimated-hashrate', {
-    ready: {
-      display: i18n('Estimated Hashrate'),
-      trigger: sdk.trigger.cooldownTrigger(10000),
-      fn: async () => {
+      requires: ['datum'],
+    })
+    .addHealthCheck('estimated-hashrate', {
+      ready: {
+        display: i18n('Estimated Hashrate'),
+        trigger: sdk.trigger.cooldownTrigger(10000),
+        fn: async () => {
           try {
             const { stdout } = await datumSub.exec([
               'sh',

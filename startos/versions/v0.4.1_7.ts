@@ -2,14 +2,14 @@ import { IMPOSSIBLE, VersionInfo, YAML } from '@start9labs/start-sdk'
 import { readFile, rm } from 'fs/promises'
 import { configJson } from '../fileModels/datum_gateway_config.json'
 
-export const v_0_4_1_6 = VersionInfo.of({
-  version: '0.4.1:6',
+export const v_0_4_1_7 = VersionInfo.of({
+  version: '0.4.1:7',
   releaseNotes: {
-    en_US: 'Internal updates (start-sdk 1.3.3)',
-    es_ES: 'Actualizaciones internas (start-sdk 1.3.3)',
-    de_DE: 'Interne Aktualisierungen (start-sdk 1.3.3)',
-    pl_PL: 'Aktualizacje wewnętrzne (start-sdk 1.3.3)',
-    fr_FR: 'Mises à jour internes (start-sdk 1.3.3)',
+    en_US: 'Fix reward sharing logic, add a new hashrate widget, use percentages for usernames modifiers.',
+    es_ES: 'Corregir lógica de distribución de recompensas, agregar un nuevo widget de hashrate, usar porcentajes para modificadores de nombres de usuario.',
+    de_DE: 'Fehlerhafte Reward-Sharing-Logik reparieren, neues Hashrate-Widget hinzufügen, Prozentsätze für Benutzernamen-Modifizierer verwenden.',
+    pl_PL: 'Napraw logikę dzielenia nagród, dodaj nowy widget hashrate, użyj procentów dla modyfikatorów nazw użytkowników.',
+    fr_FR: 'Corrige la logique de partage des récompenses, ajoute un nouveau widget de taux de hachage, utilise des pourcentages pour les modificateurs de noms d\'utilisateur.',
   },
   migrations: {
     up: async ({ effects }) => {

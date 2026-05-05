@@ -73,14 +73,14 @@ Datum Gateway is configured through **StartOS actions** that write to `datum_gat
 
 Each configuration section has its own dedicated action:
 
-| Action                      | Settings                                                                                                                                                                                          |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Bitcoin RPC Settings**    | Work update interval (5–120 seconds)                                                                                                                                                              |
+| Action                      | Settings                                                                                                                                                                                                        |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Bitcoin RPC Settings**    | Work update interval (5–120 seconds)                                                                                                                                                                            |
 | **Stratum Server Settings** | Max clients per thread, max threads, max clients, PROXY trust level, vardiff parameters (min difficulty, target shares/min, update speed, delta), stale share timeout, miner fingerprinting, username modifiers |
-| **Mining Settings**         | Bitcoin payout address, primary/secondary coinbase tags, coinbase unique ID                                                                                                                        |
-| **API**                     | Allow insecure authentication (for Safari)                                                                                                                                                         |
-| **Logger**                  | Console log level (0–5), file logging toggle, log file path, file log level                                                                                                                        |
-| **Datum**                   | Pool host, pool port, pool public key, pass workers/full users to pool, always pay self, reward sharing strategy (require/prefer/never)                                                            |
+| **Mining Settings**         | Bitcoin payout address, primary/secondary coinbase tags, coinbase unique ID                                                                                                                                     |
+| **API**                     | Allow insecure authentication (for Safari)                                                                                                                                                                      |
+| **Logger**                  | Console log level (0–5), file logging toggle, log file path, file log level                                                                                                                                     |
+| **Datum**                   | Pool host, pool port, pool public key, pass workers/full users to pool, always pay self, reward sharing strategy (require/prefer/never)                                                                         |
 
 Settings **not** managed by StartOS (hardcoded or derived):
 
@@ -104,7 +104,7 @@ The **reward sharing** selector in the Datum Pool section controls pooled vs sol
 
 ### Username Modifiers
 
-The stratum server supports **username modifiers** for distributing mining shares across multiple Bitcoin addresses. Each modifier maps a name to a set of addresses with split percentages (0–1).
+The stratum server supports **username modifiers** for distributing mining shares across multiple Bitcoin addresses. Each modifier maps a name to a set of addresses with split percentages (0–100). The splits within a single modifier must sum to 100.
 
 ## Network Access and Interfaces
 
@@ -137,15 +137,15 @@ With the **Prefer** strategy, Datum Gateway falls back to solo mining if the poo
 
 ### Config
 
-| Action                      | Purpose                                     | Availability |
-| --------------------------- | ------------------------------------------- | ------------ |
-| **Bitcoin RPC Settings**    | Configure Bitcoin RPC work update interval  | Any          |
-| **Stratum Server Settings** | Configure stratum server tuning and vardiff | Any          |
-| **Mining Settings**         | Configure payout address and coinbase tags  | Any          |
-| **API**                     | Configure dashboard authentication          | Any          |
-| **Logger**                  | Configure log levels and file logging       | Any          |
-| **Datum**                   | Configure pool connection and reward sharing| Any          |
-| **Create/Reset Password**   | Generate admin password for the dashboard   | Any          |
+| Action                      | Purpose                                      | Availability |
+| --------------------------- | -------------------------------------------- | ------------ |
+| **Bitcoin RPC Settings**    | Configure Bitcoin RPC work update interval   | Any          |
+| **Stratum Server Settings** | Configure stratum server tuning and vardiff  | Any          |
+| **Mining Settings**         | Configure payout address and coinbase tags   | Any          |
+| **API**                     | Configure dashboard authentication           | Any          |
+| **Logger**                  | Configure log levels and file logging        | Any          |
+| **Datum**                   | Configure pool connection and reward sharing | Any          |
+| **Create/Reset Password**   | Generate admin password for the dashboard    | Any          |
 
 The **Create/Reset Password** action dynamically shows "Create Password" when no password is set, and "Reset Password" otherwise. It generates a 22-character random password and saves it to the config.
 
@@ -157,12 +157,14 @@ The **Create/Reset Password** action dynamically shows "Create Password" when no
 
 ## Health Checks
 
-| Check                 | Method                                          | Messages                                      |
-| --------------------- | ----------------------------------------------- | --------------------------------------------- |
-| **Web Interface**     | `checkPortListening` on port 7152               | Ready: "The Datum Gateway dashboard is ready" |
-| **Stratum Interface** | `checkPortListening` on port 23334 (1s timeout) | Ready: "Stratum server is available"          |
+| Check                                   | Method                                                 | Messages                                              |
+| --------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------- |
+| **Web Interface**                       | `checkPortListening` on port 7152                      | Ready: "The Datum Gateway dashboard is ready"         |
+| **Stratum Interface**                   | `checkPortListening` on port 23334 (1s timeout)        | Ready: "Stratum server is available"                  |
+| **Number of Stratum Clients Connected** | Polls dashboard every 10s; parses active subscriptions | "Connected Clients: N"                                |
+| **Estimated Hashrate**                  | Polls dashboard every 10s; parses estimated hashrate   | "Estimated Hashrate: N H/s" (unit reflects dashboard) |
 
-The Stratum health check requires the datum daemon to be ready first.
+All checks except **Web Interface** require the datum daemon to be ready first.
 
 ## Dependencies
 
@@ -232,6 +234,8 @@ actions:
 health_checks:
   - checkPortListening:7152: web_interface
   - checkPortListening:23334: stratum_interface
+  - poll_dashboard:10s: stratum_clients_connected
+  - poll_dashboard:10s: estimated_hashrate
 backup_volumes:
   - main (full volume)
 auto_configured_dependency_settings:

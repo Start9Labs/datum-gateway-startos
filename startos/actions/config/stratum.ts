@@ -67,9 +67,7 @@ const inputSpec = InputSpec.of({
   }),
   vardiff_quickdiff_count: Value.number({
     name: i18n('Difficulty Update Speed'),
-    description: i18n(
-      'How many shares before considering a quick diff update',
-    ),
+    description: i18n('How many shares before considering a quick diff update'),
     required: false,
     default: null,
     placeholder: '8',
@@ -139,11 +137,15 @@ const inputSpec = InputSpec.of({
                   }),
                   split: Value.number({
                     name: i18n('Address split percentage'),
+                    warning: i18n(
+                      'The sum of all address splits must be equal to 100.',
+                    ),
                     required: true,
                     default: null,
                     integer: false,
+                    step: 0.01,
                     min: 0,
-                    max: 1,
+                    max: 100,
                   }),
                 }),
               },
@@ -169,8 +171,35 @@ export const stratumConfig = sdk.Action.withInput(
 
   inputSpec,
 
-  async ({ effects }) => configJson.read((c) => c?.stratum).const(effects),
+  async ({ effects }) => {
+    const stratum = await configJson.read((c) => c?.stratum).const(effects)
+    if (!stratum) return stratum
+    return {
+      ...stratum,
+      username_modifiers: stratum.username_modifiers.map((modifier) => ({
+        ...modifier,
+        addresses: modifier.addresses.map((a) => ({
+          ...a,
+          split: parseFloat((a.split * 100).toFixed(10)),
+        })),
+      })),
+    }
+  },
 
-  ({ effects, input }) =>
-    configJson.merge(effects, { stratum: utils.nullToUndefined(input) }),
+  async ({ effects, input }) => {
+    const transformed = {
+      ...input,
+      username_modifiers: input.username_modifiers.map((modifier) => ({
+        ...modifier,
+        addresses: modifier.addresses.map((a) => ({
+          ...a,
+          split:
+            a.split !== null ? parseFloat((a.split / 100).toFixed(10)) : null,
+        })),
+      })),
+    }
+    await configJson.merge(effects, {
+      stratum: utils.nullToUndefined(transformed),
+    })
+  },
 )

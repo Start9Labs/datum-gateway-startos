@@ -8,10 +8,6 @@ export const manifest = setupManifest({
   packageRepo: 'https://github.com/Start9Labs/datum-gateway-startos/tree/next',
   upstreamRepo: 'https://github.com/ocean-xyz/datum-gateway',
   marketingUrl: 'https://ocean.xyz',
-  docsUrls: [
-    'https://github.com/OCEAN-xyz/datum-gateway-startos/tree/next/docs/instructions.md',
-    'https://ocean.xyz/docs/datum',
-  ],
   donationUrl: null,
   description: { short, long },
   volumes: ['main'],

@@ -6,11 +6,8 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
-    "@start9labs/start-sdk": "^1.5.0",
-    "bitcoin-knots-startos": "github:Start9Labs/bitcoin-knots-startos#next"
-  },
-  "overrides": {
-    "@start9labs/start-sdk": "^1.5.0"
+    "@start9labs/start-sdk": "^1.5.1",
+    "bitcoin-knots-startos": "github:Start9Labs/bitcoin-knots-startos#next/29.x"
   },
   "devDependencies": {
     "@types/node": "^22.19.0",

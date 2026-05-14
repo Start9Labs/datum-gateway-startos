@@ -1,5 +1,3 @@
-## How the upstream version is pulled
-- Git submodule `datum_gateway/` → checkout new tag
-- Image `datum` is `dockerBuild` from root (no dockerTag to update)
+# CLAUDE.md
 
-> Fork of OCEAN-xyz/datum-gateway-startos.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the doc map and contribution workflow.

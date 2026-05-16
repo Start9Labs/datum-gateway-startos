@@ -3,14 +3,11 @@ FROM debian:bookworm-slim AS build
 RUN apt update && \
     apt-get install -y build-essential cmake curl libmicrohttpd-dev libjansson-dev \
                        libcurl4-openssl-dev libgcrypt20-dev libsodium-dev \
-                       netcat-traditional pkg-config git
-
-COPY /.git /parent_dir/.git
+                       netcat-traditional pkg-config
 
 ADD ./datum_gateway /parent_dir/datum_gateway
 WORKDIR /parent_dir/datum_gateway
-RUN git status
-RUN cmake . && make
+RUN BITCOIN_GENBUILD_NO_GIT=1 cmake . && make
 
 FROM debian:bookworm-slim AS final
 

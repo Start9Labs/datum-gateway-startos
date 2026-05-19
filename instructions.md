@@ -2,7 +2,7 @@
 
 ## Documentation
 
-- [OCEAN Datum documentation](https://ocean.xyz/docs/datum) — upstream guide to DATUM, pool mining on OCEAN, and miner setup.
+- [OCEAN Datum documentation](https://ocean.xyz/docs) — upstream guide to DATUM, pool mining on OCEAN, and miner setup.
 
 ## What you get on StartOS
 

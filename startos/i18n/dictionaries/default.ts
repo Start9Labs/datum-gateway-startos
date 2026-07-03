@@ -11,6 +11,7 @@ const dict = {
   'Number of Stratum Clients Connected': 6,
   'Connected Clients: ${num}': 7,
   "Couldn't fetch the number of clients": 8,
+  'Bitcoin is not yet reachable on the internal network': 280,
   'Estimated Hashrate': 9,
   'Estimated Hashrate: ${num} Th/s': 10,
   "Couldn't fetch the hashrate": 11,

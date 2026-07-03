@@ -24,6 +24,9 @@ export default {
     // dependencies.ts
     30: 'Datum requiert que le paramètre blocknotify contienne une valeur spécifique',
 
+    // main.ts
+    280: "Bitcoin n'est pas encore accessible sur le réseau interne",
+
     // taskResetPassword.ts
     40: "Vous devez définir un mot de passe administrateur pour accéder à l'interface web de Datum Gateway",
 

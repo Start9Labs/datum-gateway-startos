@@ -3,13 +3,13 @@ import { readFile, rm } from 'fs/promises'
 import { configJson } from '../fileModels/datum_gateway_config.json'
 
 export const current = VersionInfo.of({
-  version: '0.4.1:9',
+  version: '0.4.1:10',
   releaseNotes: {
-    en_US: 'Bumps start-sdk to 1.5.2.',
-    es_ES: 'Actualiza start-sdk a 1.5.2.',
-    de_DE: 'Aktualisiert start-sdk auf 1.5.2.',
-    pl_PL: 'Aktualizuje start-sdk do 1.5.2.',
-    fr_FR: 'Met à jour start-sdk vers 1.5.2.',
+    en_US: 'Internal updates (start-sdk 2.0.x)',
+    es_ES: 'Actualizaciones internas (start-sdk 2.0.x)',
+    de_DE: 'Interne Aktualisierungen (start-sdk 2.0.x)',
+    pl_PL: 'Aktualizacje wewnętrzne (start-sdk 2.0.x)',
+    fr_FR: 'Mises à jour internes (start-sdk 2.0.x)',
   },
   migrations: {
     up: async ({ effects }) => {

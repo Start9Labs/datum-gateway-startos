@@ -11,9 +11,8 @@ const bitcoindShape = z.object({
   rpccookiefile: z
     .literal(`${knotsMountpoint}/.cookie`)
     .catch(`${knotsMountpoint}/.cookie`),
-  rpcurl: z
-    .literal('http://bitcoind.startos:8332')
-    .catch('http://bitcoind.startos:8332'),
+  // Address is dynamic (bitcoind's RPC over the LXC bridge); pinned in main.ts.
+  rpcurl: z.string().catch('http://bitcoind.startos:8332'),
   rpcuser: z.undefined().catch(undefined),
   rpcpassword: z.undefined().catch(undefined),
   // Configurable (upstream defaults apply when absent)

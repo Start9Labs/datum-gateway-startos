@@ -21,9 +21,6 @@ export const main = sdk.setupMain(async ({ effects }) => {
 
   // Point Datum at bitcoind's RPC over the LXC bridge (replaces bitcoind.startos DNS).
   const rpcurl = await bitcoindRpcUrl(effects)
-  if (!rpcurl) {
-    throw new Error(i18n('Bitcoin is not yet reachable on the internal network'))
-  }
   await configJson.merge(
     effects,
     { bitcoind: { rpcurl } },

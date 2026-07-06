@@ -46,7 +46,8 @@ export function bridgeAddress(
         const port =
           host?.bindings[opts.internalPort]?.net.assignedPort ??
           opts.fallbackPort
-        return port != null ? `${osIp}:${port}` : null
+        if (port == null) return null
+        return `${osIp}:${port}`
       },
     )
   }
@@ -72,9 +73,9 @@ export const stratumInterfaceId = 'stratum'
  * bitcoind's RPC endpoint over the LXC bridge, as a URL. Routed through
  * `bridgeAddress`, so this `.const()` restarts main only when bitcoind's RPC
  * address actually changes — install, uninstall, or port change — never on a
- * bitcoind update. While bitcoind is absent it resolves to a loopback
- * placeholder (connection-refused, reflected by the health check) and heals
- * automatically when the binding appears.
+ * bitcoind update. `undefined` while bitcoind is absent (no address could
+ * work); main omits `rpcurl` in that case and the RPC connection fails
+ * naturally until the binding appears and heals it.
  */
 export const bitcoindRpcUrl = async (effects: T.Effects) => {
   const bridge = await bridgeAddress(effects, {
@@ -82,7 +83,7 @@ export const bitcoindRpcUrl = async (effects: T.Effects) => {
     hostId: btcRpcHostId,
     internalPort: rpcPort,
   }).const()
-  return `http://${bridge ?? `127.0.0.1:${rpcPort}`}`
+  return bridge == null ? undefined : `http://${bridge}`
 }
 
 /**

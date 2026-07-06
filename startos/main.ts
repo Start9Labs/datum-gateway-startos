@@ -20,12 +20,15 @@ export const main = sdk.setupMain(async ({ effects }) => {
   }
 
   // Point Datum at bitcoind's RPC over the LXC bridge (replaces bitcoind.startos DNS).
+  // Absent until bitcoind resolves; omit rpcurl rather than write a dead address.
   const rpcurl = await bitcoindRpcUrl(effects)
-  await configJson.merge(
-    effects,
-    { bitcoind: { rpcurl } },
-    { allowWriteAfterConst: true },
-  )
+  if (rpcurl) {
+    await configJson.merge(
+      effects,
+      { bitcoind: { rpcurl } },
+      { allowWriteAfterConst: true },
+    )
+  }
 
   const datumSub = await sdk.SubContainer.eager(
     effects,
@@ -139,11 +142,11 @@ export const main = sdk.setupMain(async ({ effects }) => {
           } catch (e) {
             return {
               result: 'success',
-              message: i18n('Couldn\'t fetch the hashrate'),
+              message: i18n("Couldn't fetch the hashrate"),
             }
           }
         },
       },
-    requires: ['datum'],
-  })
+      requires: ['datum'],
+    })
 })

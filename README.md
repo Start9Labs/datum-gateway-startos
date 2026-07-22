@@ -63,7 +63,7 @@ Key files on the `main` volume:
    - **Set an admin password** — required to access the Datum Gateway dashboard
    - **Set a pool address** — the Bitcoin address for mining rewards
 3. Bitcoin RPC is pre-configured to connect to the local `bitcoind` service via cookie authentication (`/mnt/knots/.cookie`)
-4. A dependency task is created on `bitcoind` to set `blocknotify` to `curl -s -m5 http://datum.startos:7152/NOTIFY`, ensuring Datum receives new block notifications
+4. A dependency task is created on `bitcoind` to set `blocknotify` to `curl -s -m5 <Datum's Web UI over the LXC bridge>/NOTIFY` (resolved at runtime by `ownUiUrl` in `startos/utils.ts`), ensuring Datum receives new block notifications
 
 ## Configuration Management
 
@@ -87,7 +87,7 @@ Settings **not** managed by StartOS (hardcoded or derived):
 | Setting                 | Value                          | Reason                                     |
 | ----------------------- | ------------------------------ | ------------------------------------------ |
 | `rpccookiefile`         | `/mnt/knots/.cookie`           | Bitcoin cookie auth via mounted volume     |
-| `rpcurl`                | `http://bitcoind.startos:8332` | Internal service networking                |
+| `rpcurl`                | bitcoind's LXC-bridge RPC URL  | Resolved at runtime by `main.ts`; omitted while bitcoind is absent (no address written until the dependency resolves) |
 | `listen_addr` (stratum) | `""` (all interfaces)          | Required for container networking          |
 | `listen_addr` (api)     | `""` (all interfaces)          | Required for container networking          |
 | `notify_fallback`       | `true`                         | Ensures block updates if blocknotify fails |
@@ -172,7 +172,7 @@ All checks except **Web Interface** require the datum daemon to be ready first.
 | ----------------------------- | -------- | ------------------------------------------------------------------------------------------- |
 | **Bitcoin Node** (`bitcoind`) | Optional | Block template generation via `getblocktemplate`; new block notifications via `blocknotify` |
 
-When the Bitcoin dependency is configured, Datum Gateway automatically creates a task on `bitcoind` to set `blocknotify = curl -s -m5 http://datum.startos:7152/NOTIFY`. This task is re-evaluated on every init to ensure the setting persists.
+When the Bitcoin dependency is configured, Datum Gateway automatically creates a task on `bitcoind` to set `blocknotify` to curl Datum's own Web UI `/NOTIFY` endpoint over the LXC bridge (resolved at runtime). This task is re-evaluated on every init to ensure the setting persists.
 
 Bitcoin Knots is recommended over Bitcoin Core for its superior template controls and mempool filtering.
 
@@ -240,7 +240,7 @@ backup_volumes:
   - main (full volume)
 auto_configured_dependency_settings:
   bitcoind:
-    blocknotify: 'curl -s -m5 http://datum.startos:7152/NOTIFY'
+    blocknotify: "curl -s -m5 <Datum's LXC-bridge Web UI URL>/NOTIFY"
 init_tasks:
   - reset-password (critical, if no admin password set)
   - autoconfig-pool-address (critical, if no pool address set)

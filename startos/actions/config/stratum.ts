@@ -1,10 +1,9 @@
 import { utils } from '@start9labs/start-sdk'
-import { List } from '@start9labs/start-sdk/base/lib/actions/input/builder'
 import { configJson } from '../../fileModels/datum_gateway_config.json'
 import { i18n } from '../../i18n'
 import { sdk } from '../../sdk'
 
-const { InputSpec, Value } = sdk
+const { InputSpec, Value, List } = sdk
 
 const inputSpec = InputSpec.of({
   max_clients_per_thread: Value.number({

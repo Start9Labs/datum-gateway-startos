@@ -1,23 +1,32 @@
 import { autoconfig } from 'bitcoin-knots-startos/startos/actions/config/autoconfig'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
+import { ownUiUrl } from './utils'
 
 export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
-  await sdk.action.createTask(effects, 'bitcoind', autoconfig, 'critical', {
-    input: {
-      kind: 'partial',
-      value: {
-        blocknotify: 'curl -s -m5 http://datum.startos:7152/NOTIFY',
+  // bitcoind reaches Datum's NOTIFY endpoint over the LXC bridge (replaces the
+  // deprecated datum.startos DNS name). Until the bridge URL resolves there is
+  // no value that could work, so defer creating the task — the reactive read
+  // re-runs this hook once the host appears and creates it with the real URL.
+  const notifyBase = await ownUiUrl(effects)
+  if (notifyBase) {
+    const blocknotify = `curl -s -m5 ${notifyBase}/NOTIFY`
+
+    await sdk.action.createTask(effects, 'bitcoind', autoconfig, 'critical', {
+      input: {
+        kind: 'partial',
+        accept: [{ blocknotify }],
+        set: { blocknotify },
       },
-    },
-    when: { condition: 'input-not-matches', once: false },
-    reason: i18n('Datum requires a particular blocknotify url'),
-  })
+      when: { condition: 'input-not-matches', once: false },
+      reason: i18n('Datum requires a particular blocknotify url'),
+    })
+  }
 
   return {
     bitcoind: {
       kind: 'running',
-      versionRange: '>=28.3:9',
+      versionRange: '>=28.4:13',
       healthChecks: ['bitcoind'],
     },
   }

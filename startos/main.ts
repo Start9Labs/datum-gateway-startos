@@ -3,7 +3,13 @@ import { manifest } from 'bitcoin-knots-startos/startos/manifest'
 import { configJson } from './fileModels/datum_gateway_config.json'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
-import { dataDir, knotsMountpoint, stratumPort, uiPort } from './utils'
+import {
+  bitcoindRpcUrl,
+  dataDir,
+  knotsMountpoint,
+  stratumPort,
+  uiPort,
+} from './utils'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting Datum Gateway...')
@@ -13,7 +19,18 @@ export const main = sdk.setupMain(async ({ effects }) => {
     throw new Error('datum config file not found')
   }
 
-  const datumSub = await sdk.SubContainer.of(
+  // Point Datum at bitcoind's RPC over the LXC bridge (replaces bitcoind.startos DNS).
+  // Absent until bitcoind resolves; omit rpcurl rather than write a dead address.
+  const rpcurl = await bitcoindRpcUrl(effects)
+  if (rpcurl) {
+    await configJson.merge(
+      effects,
+      { bitcoind: { rpcurl } },
+      { allowWriteAfterConst: true },
+    )
+  }
+
+  const datumSub = await sdk.SubContainer.eager(
     effects,
     { imageId: 'datum' },
     sdk.Mounts.of()
@@ -33,8 +50,10 @@ export const main = sdk.setupMain(async ({ effects }) => {
     'datum-sub',
   )
 
+  const rootfs = await datumSub.rootfs
+
   // Restart daemon chain if bitcoind's cookie file changes
-  await FileHelper.string(`${datumSub.rootfs}${knotsMountpoint}/.cookie`)
+  await FileHelper.string(`${rootfs}${knotsMountpoint}/.cookie`)
     .read()
     .const(effects)
 
@@ -123,11 +142,11 @@ export const main = sdk.setupMain(async ({ effects }) => {
           } catch (e) {
             return {
               result: 'success',
-              message: i18n('Couldn\'t fetch the hashrate'),
+              message: i18n("Couldn't fetch the hashrate"),
             }
           }
         },
       },
-    requires: ['datum'],
-  })
+      requires: ['datum'],
+    })
 })

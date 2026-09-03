@@ -1,5 +1,5 @@
 import { FileHelper } from '@start9labs/start-sdk'
-import { manifest } from 'bitcoin-knots-startos/startos/manifest'
+import { manifest } from 'bitcoin-core-startos/startos/manifest'
 import { configJson } from './fileModels/datum_gateway_config.json'
 import { i18n } from './i18n'
 import { sdk } from './sdk'

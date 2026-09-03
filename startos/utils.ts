@@ -2,7 +2,7 @@ import { T } from '@start9labs/start-sdk'
 import {
   rpcHostId as btcRpcHostId,
   rpcPort,
-} from 'bitcoin-knots-startos/startos/utils'
+} from 'bitcoin-core-startos/startos/utils'
 import { sdk } from './sdk'
 
 export const uiPort = 7152

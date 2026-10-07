@@ -17,7 +17,7 @@ const inputSpec = InputSpec.of({
   }),
   pool_port: Value.number({
     name: i18n('Pool Port'),
-    description: i18n('Remote DATUM server port'),
+    description: null,
     required: false,
     default: null,
     placeholder: '28915',
@@ -59,7 +59,7 @@ const inputSpec = InputSpec.of({
   reward_sharing: Value.select({
     name: i18n('Collaborative reward sharing (pooled mining)'),
     description: i18n(
-      "You can share rewards and share in others' rewards - or only get rewarded when you find a block yourself.",
+      '- require: mine through the pool only. If the pool is unreachable, Datum Gateway disconnects your miners.\n- prefer: mine through the pool, and mine solo while the pool is unreachable.\n- never: mine solo. Any block you find pays the Bitcoin Address in Mining Settings.',
     ),
     default: 'require',
     values: {

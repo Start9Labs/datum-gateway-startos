@@ -21,7 +21,7 @@ const inputSpec = InputSpec.of({
   log_to_file: Value.toggle({
     name: i18n('Log to File'),
     default: false,
-    description: i18n('Enable logging of messages to a file'),
+    description: null,
   }),
   log_file: Value.text({
     name: i18n('Log File'),
@@ -32,7 +32,9 @@ const inputSpec = InputSpec.of({
   }),
   log_level_file: Value.number({
     name: i18n('File Log Level'),
-    description: i18n('Minimum log level for log file messages'),
+    description: i18n(
+      'Minimum log level for log file messages (0=All, 1=Debug, 2=Info, 3=Warn, 4=Error, 5=Fatal)',
+    ),
     required: false,
     default: null,
     placeholder: '1',

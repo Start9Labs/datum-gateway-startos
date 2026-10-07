@@ -8,7 +8,7 @@ const { InputSpec, Value, List } = sdk
 const inputSpec = InputSpec.of({
   max_clients_per_thread: Value.number({
     name: i18n('Maximum Clients Per Thread'),
-    description: i18n('Maximum clients per Stratum server thread.'),
+    description: null,
     required: false,
     default: null,
     placeholder: '128',
@@ -17,7 +17,7 @@ const inputSpec = InputSpec.of({
   }),
   max_threads: Value.number({
     name: i18n('Max Threads'),
-    description: i18n('Maximum Stratum server threads'),
+    description: null,
     required: false,
     default: null,
     placeholder: '8',
@@ -37,7 +37,9 @@ const inputSpec = InputSpec.of({
   }),
   trust_proxy: Value.number({
     name: i18n('Trust PROXY'),
-    description: i18n('Number of PROXY lines trusted'),
+    description: i18n(
+      'Enables the PROXY protocol, trusting up to this many levels of proxies in front of your miners. -1 disables it.',
+    ),
     required: false,
     default: null,
     placeholder: '-1',
@@ -46,7 +48,7 @@ const inputSpec = InputSpec.of({
   }),
   vardiff_min: Value.number({
     name: i18n('Minimum Difficulty'),
-    description: i18n('Work difficulty floor'),
+    description: null,
     required: false,
     default: null,
     placeholder: '16384',
@@ -114,7 +116,7 @@ const inputSpec = InputSpec.of({
             name: i18n('Modifier name'),
             required: true,
             default: null,
-            description: i18n('User defined modifier name'),
+            description: null,
           }),
           addresses: Value.list(
             List.obj(

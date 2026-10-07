@@ -8,7 +8,7 @@
 
 - A **Web UI** interface (the Datum Gateway dashboard) for monitoring connected miners, hashrate, and share activity.
 - A **Stratum Server** interface that your ASICs point at to receive work.
-- A pre-wired connection to a local **Bitcoin** node (cookie-authenticated, with `blocknotify` set automatically) for block template generation.
+- A pre-wired connection to a local **Bitcoin** node (cookie-authenticated, with the `blocknotify` setting it needs requested as a task on Bitcoin) for block template generation.
 - A default configuration that pool-mines on OCEAN; switchable to another DATUM-supporting pool or solo mining through one action.
 
 ## Getting set up
@@ -17,7 +17,7 @@ You need a Bitcoin node running on this server before Datum Gateway can produce 
 
 Datum Gateway posts two critical tasks after install. You can't start the service until both are done.
 
-1. Install and start **Bitcoin**. Datum Gateway will set its `blocknotify` automatically when the dependency is satisfied.
+1. Install and start **Bitcoin**, then run the task Datum Gateway raises on Bitcoin's page. It sets Bitcoin's `blocknotify` so Datum Gateway hears about new blocks.
 2. Run the **Create Password** task. A random admin password is generated and shown once — copy and save it before dismissing. You'll need it to log into the dashboard. If you lose it, run the **Reset Password** action later.
 3. Run the **Config pool address** task and enter the Bitcoin address you want mining rewards paid to. This is the payout address Datum Gateway uses for solo-found blocks, and as the fail-safe when pooling on OCEAN.
 4. Start Datum Gateway.
@@ -40,7 +40,7 @@ Open the **Web UI** interface and log in with the admin password from setup. The
 
 ### Actions
 
-- **Create Password / Reset Password** — generate a new admin dashboard password (named "Create Password" when none is set, "Reset Password" afterward). The new password is shown once.
+- **Create Password / Reset Password** — generate a new admin dashboard password (named "Create Password" when none is set, "Reset Password" afterward). The new password is shown once. Reset asks for confirmation first, since the current password stops working.
 - **Datum** — pool host, port, public key, worker pass-through, and the **Collaborative reward sharing** selector that controls pool vs solo behavior:
   - **require** (default) — pool mining only; if the pool is unreachable, Datum Gateway stops issuing work and your miners fail over to whatever backup pool they're configured with.
   - **prefer** — pool mine when possible, fall back to solo mining if the pool is unavailable.

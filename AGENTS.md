@@ -18,14 +18,21 @@ Freshly scaffolded? Work the
 guide page, not a file in this repo — read it, don't copy it in.
 
 Keep `README.md` (technical reference for an AI support or administering agent) and
-`instructions.md` (end-user docs) in sync with your changes.
+`instructions.md` (end-user docs) in sync with your changes. This file restates neither:
+whoever changes the package has both, so it carries only what they don't — repo mechanics,
+a change that looks right and is not, where the next thing gets added, a naming trap, a
+build or test invocation particular to this repo.
 
-**Bugs and feature requests are GitHub issues on this repo** — file them as you find them.
+**Fix a defect you spot rather than reporting it** — you have the package open and the
+context to be sure. File **a GitHub issue on this repo** only when the call isn't yours to
+make: you can't pin the cause down, two defensible fixes exist, or it's too large to ride on
+the work in hand. An open issue is a report, not a queue — implement one when you're asked
+to or when it's labelled `Approved`, then close it with `Closes #<n>`.
+
 Don't record work in the repo instead: no `TODO.md`, no `NOTES.md`, no `PLAN.md`. What you
 verified, tried, and decided belongs in the commit message and the PR body.
 
 ## This repo
 
 - **Package id is `datum`, not `datum-gateway`.** The repo and directory are named for the product; `effects` calls, dependents, and `start-cli` all take `datum`.
-- **`reward_sharing` is a derived control, not a stored field.** The action maps require/prefer/never onto upstream's `pool_host` + `pooled_mining_only`, and the pre-fill reverses it. Change one half and the form starts lying about the file's state.
-- **Ports come from `bitcoin-knots-startos`, not `bitcoin-core-startos`.** Both flavors share the `bitcoind` package id, so either import resolves at runtime — but keep the import consistent with the mount point (`/mnt/knots`) so the two do not drift apart.
+- **Change `reward_sharing`'s mapping and its pre-fill together** (`actions/config/datum.ts`). The form field is derived from upstream's `pool_host` + `pooled_mining_only`; change one half and the form starts lying about the file's state.

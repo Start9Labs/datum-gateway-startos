@@ -18,7 +18,11 @@ export const resetPassword = sdk.Action.withoutInput(
       description: hasPass
         ? i18n('Reset your admin password')
         : i18n('Create your admin password'),
-      warning: null,
+      warning: hasPass
+        ? i18n(
+            'A new admin password is generated, and the current one stops working.',
+          )
+        : null,
       allowedStatuses: 'any',
       group: 'Config',
       visibility: 'enabled',

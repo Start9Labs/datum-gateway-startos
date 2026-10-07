@@ -74,7 +74,7 @@ Stratum username modifiers are also reshaped: the file stores them as nested obj
 
 ## Dependencies
 
-One, declared optional in the manifest but required in practice.
+One, and it is required.
 
 | Dependency | Kind      | Health check | Mount                   | Why                                          |
 | ---------- | --------- | ------------ | ----------------------- | -------------------------------------------- |
@@ -96,6 +96,8 @@ Two interfaces: one for you, one for your miners.
 | Stratum Server | `stratum` | api  | 23334 | Where ASICs connect         |
 
 Both are bound on their own hosts — `main` and `mining` — so the dashboard and the miner-facing endpoint can be exposed independently. The stratum binding is plain TCP with no TLS, which is what stratum clients expect.
+
+The StartOS 0.3.5 package bound stratum on port 23335 of the `mining` host. Updating to `0.4.1:16` or later retires that binding, freeing its port; nothing listens there any more.
 
 ## Installation and First-Run Flow
 
@@ -125,7 +127,7 @@ Six actions grouped under Config, each writing its own section of the config fil
 Generates the dashboard's admin password. The action renames itself — "Create Password" when none is set, "Reset Password" afterwards — so it reads correctly both as the install task and as recovery later.
 
 - **What it changes:** `api.admin_password` in the config file.
-- **Repeat safety:** safe to re-run; each run generates a fresh password and invalidates the old one.
+- **Repeat safety:** safe to re-run; each run generates a fresh password and invalidates the old one. When a password is already set, the action asks for confirmation first.
 - **Outputs:** the password, masked and copyable. It is not recoverable afterwards.
 
 ### Config pool address — hidden
@@ -170,7 +172,7 @@ The `main` volume is copied wholesale — `sdk.Backups.ofVolumes('main')`. No du
 
 ## Limitations and Differences
 
-1. **A Bitcoin node is required in practice**, despite the dependency being declared optional: without it there are no block templates.
+1. **A Bitcoin node is required**: without it there are no block templates.
 2. **Bitcoin must be configured to notify the gateway**, which is a change to Bitcoin's own settings, requested as a task on that service.
 3. **Reward sharing is presented as one choice, not two fields.** The underlying pool host and pooled-mining flag are derived from it.
 4. **Mining cannot start until the payout address is set**, by design rather than by defaulting to an address the package chose.
@@ -195,7 +197,7 @@ file_models:
   - /root/data/datum_gateway_config.json
 startos_managed_env_vars: []
 dependencies:
-  - bitcoind # declared optional; required in practice, mounted read-only at /mnt/knots
+  - bitcoind # required; mounted read-only at /mnt/knots
 interfaces:
   ui: { type: ui, port: 7152 }
   stratum: { type: api, port: 23334 }

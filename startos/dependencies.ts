@@ -1,9 +1,19 @@
 import { autoconfig } from 'bitcoin-core-startos/startos/actions/config/autoconfig'
 import { i18n } from './i18n'
+import { bitcoinDescription } from './manifest/i18n'
 import { sdk } from './sdk'
 import { ownUiUrl } from './utils'
 
-export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
+const bitcoind = sdk.Dependency.required('bitcoind', {
+  description: bitcoinDescription,
+  metadata: {
+    title: 'Bitcoin',
+    icon: 'https://raw.githubusercontent.com/Start9Labs/bitcoin-core-startos/feec0b1dae42961a257948fe39b40caf8672fce1/dep-icon.svg',
+  },
+  versionRange: '>=28.4:14',
+  kind: 'running',
+  healthChecks: ['bitcoind'],
+}).withInit(async (effects) => {
   // bitcoind reaches Datum's NOTIFY endpoint over the LXC bridge (replaces the
   // deprecated datum.startos DNS name). Until the bridge URL resolves there is
   // no value that could work, so defer creating the task — the reactive read
@@ -22,12 +32,6 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
       reason: i18n('Datum requires a particular blocknotify url'),
     })
   }
-
-  return {
-    bitcoind: {
-      kind: 'running',
-      versionRange: '>=28.4:14',
-      healthChecks: ['bitcoind'],
-    },
-  }
 })
+
+export const dependencies = sdk.Dependencies.of().addDependency(bitcoind)

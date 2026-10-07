@@ -6,7 +6,7 @@ const optString = z.string().optional().catch(undefined)
 const optNumber = z.number().optional().catch(undefined)
 const optBoolean = z.boolean().optional().catch(undefined)
 
-const bitcoindShape = z.object({
+const bitcoindShape = z.looseObject({
   // Enforced
   rpccookiefile: z
     .literal(`${knotsMountpoint}/.cookie`)
@@ -21,7 +21,7 @@ const bitcoindShape = z.object({
   notify_fallback: optBoolean,
 })
 
-const stratumShape = z.object({
+const stratumShape = z.looseObject({
   // Enforced
   listen_addr: z.literal('').catch(''),
   listen_port: z.literal(stratumPort).catch(stratumPort),
@@ -45,14 +45,14 @@ const stratumShape = z.object({
     .catch(undefined),
 })
 
-const miningShape = z.object({
+const miningShape = z.looseObject({
   pool_address: optString,
   coinbase_tag_primary: optString,
   coinbase_tag_secondary: optString,
   coinbase_unique_id: optNumber,
 })
 
-const apiShape = z.object({
+const apiShape = z.looseObject({
   // Enforced
   listen_port: z.literal(uiPort).catch(uiPort),
   listen_addr: z.literal('').catch(''),
@@ -61,7 +61,7 @@ const apiShape = z.object({
   allow_insecure_auth: optBoolean,
 })
 
-const loggerShape = z.object({
+const loggerShape = z.looseObject({
   // Enforced
   log_to_stderr: z.literal(false).catch(false),
   // Configurable
@@ -73,7 +73,7 @@ const loggerShape = z.object({
   log_level_file: optNumber,
 })
 
-const datumShape = z.object({
+const datumShape = z.looseObject({
   pool_host: optString,
   pool_port: optNumber,
   pool_pubkey: optString,
@@ -87,7 +87,7 @@ const datumShape = z.object({
 // Two shapes, and they must be edited together. diskShape is what upstream
 // reads; formShape differs only in stratum.username_modifiers, which is a keyed
 // object on disk and a list in the form.
-const diskShape = z.object({
+const diskShape = z.looseObject({
   bitcoind: bitcoindShape.catch(bitcoindShape.parse({})),
   stratum: stratumShape.catch(stratumShape.parse({})),
   mining: miningShape.catch(miningShape.parse({})),
@@ -102,17 +102,17 @@ const stratumFormShape = stratumShape
   .extend({
     username_modifiers: z
       .array(
-        z.object({
+        z.looseObject({
           name: z.string(),
           addresses: z.array(
-            z.object({ address: z.string().catch(''), split: z.number() }),
+            z.looseObject({ address: z.string().catch(''), split: z.number() }),
           ),
         }),
       )
       .catch([]),
   })
 
-const formShape = z.object({
+const formShape = z.looseObject({
   bitcoind: bitcoindShape.catch(bitcoindShape.parse({})),
   stratum: stratumFormShape.catch(stratumFormShape.parse({})),
   mining: miningShape.catch(miningShape.parse({})),

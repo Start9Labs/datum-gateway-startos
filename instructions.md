@@ -9,7 +9,7 @@
 
 - A **Web UI** interface (the Datum Gateway dashboard) for monitoring connected miners, hashrate, and share activity.
 - A **Stratum Server** interface that your ASICs point at to receive work.
-- A pre-wired connection to a local **Bitcoin** node (cookie-authenticated, with the `blocknotify` setting it needs requested as a task on Bitcoin) for block template generation.
+- A pre-wired connection to a local **Bitcoin** node (cookie-authenticated, with the `blocknotify` and coinbase-reservation settings it needs requested as a task on Bitcoin) for block template generation.
 - A default configuration that pool-mines on OCEAN; switchable to another DATUM-supporting pool or solo mining through one action.
 
 ## Getting set up
@@ -18,7 +18,7 @@ You need a Bitcoin node running on this server before Datum Gateway can produce 
 
 Datum Gateway posts two critical tasks after install. You can't start the service until both are done.
 
-1. Install and start **Bitcoin**, then run the task Datum Gateway raises on Bitcoin's page. It sets Bitcoin's `blocknotify` so Datum Gateway hears about new blocks.
+1. Install and start **Bitcoin**, then run the task Datum Gateway raises on Bitcoin's page. It sets Bitcoin's `blocknotify` so Datum Gateway hears about new blocks, and reserves enough room in each block for Datum Gateway's coinbase.
 2. Run the **Create Password** task. A random admin password is generated and shown once — copy and save it before dismissing. You'll need it to log into the dashboard. If you lose it, run the **Reset Password** action later.
 3. Run the **Config pool address** task and enter the Bitcoin address you want mining rewards paid to. This is the payout address Datum Gateway uses for solo-found blocks, and as the fail-safe when pooling on OCEAN.
 4. Start Datum Gateway.

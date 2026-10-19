@@ -22,7 +22,7 @@ const dict = {
   'Point your ASICs here!': 23,
 
   // dependencies.ts
-  'Datum requires a particular blocknotify url': 30,
+  'Datum requires a particular blocknotify url and enough block weight reserved for its coinbase': 30,
 
   // taskResetPassword.ts
   'You must set an admin password to access your Datum UI': 40,

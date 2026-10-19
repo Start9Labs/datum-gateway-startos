@@ -97,7 +97,7 @@ Two interfaces: one for you, one for your miners.
 
 Both are bound on their own hosts — `main` and `mining` — so the dashboard and the miner-facing endpoint can be exposed independently. The stratum binding is plain TCP with no TLS, which is what stratum clients expect.
 
-Stratum uses port 23334; port 23335 is not reserved by this package.
+Stratum uses port 23334.
 
 The Web UI listener also serves upstream's JSON API when **Enable JSON API** is on in the API action (the upstream default). For example, `GET /v1/stratum_server_info` returns subscription counts and estimated hashrate in TH/s. Most statistics are unauthenticated; `/v1/stratum_client_list` and `/v1/configuration` require HTTP Digest authentication as `admin`. Configuration writes additionally require `api.modify_conf` (disabled by upstream default) and the startup-specific CSRF token. Disabling the JSON API leaves the HTML dashboard, its statistics-based health checks, and `/NOTIFY` available. See the [upstream JSON API reference](https://github.com/OCEAN-xyz/datum_gateway/blob/v0.5.0beta/doc/json_api.md).
 
@@ -105,7 +105,7 @@ The Web UI listener also serves upstream's JSON API when **Enable JSON API** is 
 
 Install writes the config file with its defaults and starts the daemon. Two things are then missing, and each raises a `critical` task rather than being guessed at: **the dashboard's admin password**, and **the Bitcoin address rewards are paid to**. Neither has a safe default — one is a credential, the other is where money goes.
 
-A third piece of setup happens on Bitcoin rather than here: the node has to be told to notify the gateway on each new block, which is raised as a task on Bitcoin's own page as soon as the gateway's address is resolvable.
+A third piece of setup happens on Bitcoin rather than here: the node has to be told to notify the gateway on each new block, and to reserve 66,000 WU of each block template (`blockreservedweight`) for the gateway's coinbase, upstream's figure for its largest pool payout. Both are raised as a task on Bitcoin's own page as soon as the gateway's address is resolvable.
 
 Once all three are done the gateway can mine through OCEAN by default, or solo if you change the Datum settings.
 
@@ -144,7 +144,7 @@ Three tasks, and one of them appears on another service's page.
 | ------------------- | --------- | ---------- | ------------------------------------------------------ | ----------------------------------------------------- |
 | Create Password     | this      | `critical` | At init, while no admin password is set                | The action runs                                       |
 | Config pool address | this      | `critical` | At init, while no payout address is set                | The action runs                                       |
-| Auto-Configure      | Bitcoin   | `critical` | Bitcoin's `blocknotify` is not the command Datum needs | Bitcoin's config matches; it returns if changed again |
+| Auto-Configure      | Bitcoin   | `critical` | Bitcoin's `blocknotify` or `blockreservedweight` is not what Datum needs | Bitcoin's config matches; it returns if changed again |
 
 The two local tasks are `critical` because neither a dashboard without a password nor mining without a payout address is a usable state.
 
@@ -170,12 +170,12 @@ Four checks. Two report health; two report numbers.
 The `main` volume is copied wholesale — `sdk.Backups.ofVolumes('main')`. No dump step and nothing excluded.
 
 - **Included:** the config file, and with it the payout address, the pool settings, and the dashboard password.
-- **Restore:** complete, and no task is raised, because the password and address arrive with the backup. Bitcoin's notify setting is not part of this package's backup — if the restored server's Bitcoin node does not carry it, the task raises again there.
+- **Restore:** complete, and no task is raised, because the password and address arrive with the backup. Bitcoin's notify and reservation settings are not part of this package's backup — if the restored server's Bitcoin node does not carry it, the task raises again there.
 
 ## Limitations and Differences
 
 1. **A Bitcoin node is required**: without it there are no block templates.
-2. **Bitcoin must be configured to notify the gateway**, which is a change to Bitcoin's own settings, requested as a task on that service.
+2. **Bitcoin must be configured to notify the gateway and reserve coinbase space**, which is a change to Bitcoin's own settings, requested as a task on that service.
 3. **Reward sharing is presented as one choice, not two fields.** The underlying pool host and pooled-mining flag are derived from it.
 4. **Mining cannot start until the payout address is set**, by design rather than by defaulting to an address the package chose.
 5. **The stratum endpoint is plain TCP.** There is no TLS option, which matches what ASIC firmware expects.
@@ -215,7 +215,7 @@ actions:
 tasks:
   - { action: reset-password, severity: critical }
   - { action: autoconfig-pool-address, severity: critical }
-  - { action: autoconfig, severity: critical } # on bitcoind, for blocknotify
+  - { action: autoconfig, severity: critical } # on bitcoind, for blocknotify and blockreservedweight
 health_checks:
   - datum # displayed "Web Interface"
   - stratum-interface

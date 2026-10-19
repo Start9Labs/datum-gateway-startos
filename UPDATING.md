@@ -17,9 +17,9 @@ Datum Gateway is built from source by the `Dockerfile` at the repo root. The ups
 
 ## Version mapping and review scope
 
-This package deliberately follows upstream's public-beta release line. Upstream tags use a suffix without a hyphen, such as `v0.5.0beta`; preserve it in ExVer as `0.5.0-beta:0`. Older wrapper releases omitted the beta suffix; do not perpetuate that omission. Reset the wrapper revision to zero on each upstream bump.
+This package deliberately follows upstream's public-beta release line. Upstream tags use a suffix without a hyphen, such as `v0.5.0beta`; preserve it in ExVer as `0.5.0-beta:0`. Reset the wrapper revision to zero on each upstream bump.
 
-Treat `0.x` minor jumps as major-review scope. Check the new source's configuration table, listeners, dashboard statistics, RPC cookie handling, persistent paths, and Bitcoin requirements. In v0.5.0beta, the JSON API defaults to enabled on the dashboard listener, and upstream's node setup requires enough reserved block weight for its coinbase transaction. Verify the Bitcoin package can supply those settings before releasing.
+Treat `0.x` minor jumps as major-review scope. Check the new source's configuration table, listeners, dashboard statistics, RPC cookie handling, persistent paths, and Bitcoin requirements. Upstream's node configuration (`doc/INSTALL.md`) is mirrored by the Auto-Configure task in `startos/dependencies.ts`; when it changes, change the task, and raise the Bitcoin floors in `versionRange` if Bitcoin must expose a new setting first.
 
 ## Applying the bump
 

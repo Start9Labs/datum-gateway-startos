@@ -22,7 +22,7 @@ const dict = {
   'Point your ASICs here!': 23,
 
   // dependencies.ts
-  'Datum requires a particular blocknotify url': 30,
+  'Datum requires a particular blocknotify url and enough block weight reserved for its coinbase': 30,
 
   // taskResetPassword.ts
   'You must set an admin password to access your Datum UI': 40,
@@ -115,6 +115,9 @@ const dict = {
   'Always include my datum.pool_username payout in my blocks if possible': 277,
   'Collaborative reward sharing (pooled mining)': 278,
   '- require: mine through the pool only. If the pool is unreachable, Datum Gateway disconnects your miners.\n- prefer: mine through the pool, and mine solo while the pool is unreachable.\n- never: mine solo. Any block you find pays the Bitcoin Address in Mining Settings.': 279,
+
+  'Enable JSON API': 281,
+  'Expose JSON endpoints on the Web UI interface. Most statistics do not require authentication. Disabling this leaves the dashboard and block notifications available.': 282,
 
   // common
   'Must be alphanumeric.': 1000,

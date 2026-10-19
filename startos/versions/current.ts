@@ -1,60 +1,26 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
-import { sdk } from '../sdk'
-import { stratumHostId } from '../utils'
 
 export const current = VersionInfo.of({
-  version: '0.4.1:16',
+  version: '0.5.0-beta:0',
   releaseNotes: {
-    en_US: `Stops DATUM Gateway reloading at the moment your Bitcoin node goes away.
+    en_US: `Updated DATUM Gateway to v0.5.0beta. Adds a JSON API and dashboard version display, hardens authentication and protocol parsing, and fixes duplicate-share tracking and submission queues across pool reconnects. The API action can enable or disable the JSON API; most statistics endpoints do not require authentication. The task on Bitcoin's page now also reserves room in each block for DATUM's coinbase. Bitcoin must be at least 29.4:23, 30.3:23 or 31.1:25, depending on its major version, or Bitcoin Knots (pre-RDTS) 29.3:31; Bitcoin 28 is no longer supported. Updated start-sdk to 3.1.0.
 
-DATUM Gateway reloads when your Bitcoin node issues new RPC credentials, which it does on every restart. That reload was previously triggered as soon as the node *began* shutting down — while its RPC was already unreachable — so DATUM Gateway was stopped and restarted against a backend that was not there yet. It now reloads only once the node is back up and has published new credentials.
+[Full upstream release notes](https://github.com/OCEAN-xyz/datum_gateway/releases/tag/v0.5.0beta)`,
+    es_ES: `DATUM Gateway actualizado a v0.5.0beta. Añade una API JSON y muestra la versión en el panel, refuerza la autenticación y el análisis del protocolo, y corrige el seguimiento de participaciones duplicadas y las colas de envío al reconectar con el pool. La acción API permite activar o desactivar la API JSON; la mayoría de los endpoints de estadísticas no requieren autenticación. La tarea en la página de Bitcoin ahora también reserva espacio en cada bloque para la coinbase de DATUM. Bitcoin debe ser al menos la versión 29.4:23, 30.3:23 o 31.1:25, según su versión principal, o Bitcoin Knots (pre-RDTS) 29.3:31; Bitcoin 28 ya no es compatible. start-sdk actualizado a 3.1.0.
 
-- Reset Password asks for confirmation before replacing the current admin password.
-- The Datum action's reward-sharing choice explains each option, and several setting descriptions are clearer.
-- Bitcoin is listed as a required dependency.
-- Network port 23335, left reserved by the StartOS 0.3.5 version of this package, is freed.
-- Bitcoin must be at least 28.4:29, 29.4:16, 30.3:16 or 31.1:16, depending on its major version. Bitcoin Knots (pre-RDTS) 29.3:29 or later also works.`,
-    es_ES: `Evita que DATUM Gateway se recargue justo cuando tu nodo Bitcoin desaparece.
+[Notas completas de la versión original](https://github.com/OCEAN-xyz/datum_gateway/releases/tag/v0.5.0beta)`,
+    de_DE: `DATUM Gateway auf v0.5.0beta aktualisiert. Fügt eine JSON-API und die Versionsanzeige im Dashboard hinzu, verbessert die Authentifizierung und Protokollverarbeitung und behebt die Erkennung doppelter Shares sowie die Übermittlungswarteschlangen bei erneuten Pool-Verbindungen. Die Aktion API kann die JSON-API aktivieren oder deaktivieren; die meisten Statistik-Endpunkte erfordern keine Authentifizierung. Die Aufgabe auf der Bitcoin-Seite reserviert jetzt zusätzlich Platz in jedem Block für die Coinbase von DATUM. Bitcoin muss je nach Hauptversion mindestens 29.4:23, 30.3:23 oder 31.1:25 sein, oder Bitcoin Knots (pre-RDTS) 29.3:31; Bitcoin 28 wird nicht mehr unterstützt. start-sdk auf 3.1.0 aktualisiert.
 
-DATUM Gateway se recarga cuando tu nodo Bitcoin emite nuevas credenciales RPC, algo que hace en cada reinicio. Esa recarga se activaba en cuanto el nodo *empezaba* a apagarse — cuando su RPC ya era inalcanzable —, así que DATUM Gateway se detenía y arrancaba contra un backend que todavía no estaba. Ahora se recarga solo cuando el nodo ha vuelto y ha publicado nuevas credenciales.
+[Vollständige Versionshinweise des Originalprojekts](https://github.com/OCEAN-xyz/datum_gateway/releases/tag/v0.5.0beta)`,
+    pl_PL: `Zaktualizowano DATUM Gateway do v0.5.0beta. Dodano API JSON i wyświetlanie wersji w panelu, wzmocniono uwierzytelnianie i analizę protokołu oraz poprawiono śledzenie zduplikowanych udziałów i kolejki wysyłania przy ponownym łączeniu z pulą. Akcja API pozwala włączać i wyłączać API JSON; większość endpointów statystycznych nie wymaga uwierzytelniania. Zadanie na stronie Bitcoin rezerwuje teraz także miejsce w każdym bloku na transakcję coinbase DATUM. Bitcoin musi być co najmniej w wersji 29.4:23, 30.3:23 lub 31.1:25, zależnie od wersji głównej, albo Bitcoin Knots (pre-RDTS) 29.3:31; Bitcoin 28 nie jest już obsługiwany. Zaktualizowano start-sdk do 3.1.0.
 
-- Restablecer contraseña pide confirmación antes de reemplazar la contraseña de administrador actual.
-- La opción de reparto de recompensas de la acción Datum explica cada opción, y varias descripciones de ajustes son más claras.
-- Bitcoin figura como dependencia obligatoria.
-- Se libera el puerto de red 23335, que la versión de este paquete para StartOS 0.3.5 dejó reservado.
-- Bitcoin debe ser al menos la versión 28.4:29, 29.4:16, 30.3:16 o 31.1:16, según su versión principal. También funciona Bitcoin Knots (pre-RDTS) 29.3:29 o posterior.`,
-    de_DE: `Verhindert, dass DATUM Gateway genau dann neu lädt, wenn Ihr Bitcoin-Knoten verschwindet.
+[Pełne informacje o wydaniu projektu źródłowego](https://github.com/OCEAN-xyz/datum_gateway/releases/tag/v0.5.0beta)`,
+    fr_FR: `DATUM Gateway mis à jour vers v0.5.0beta. Ajoute une API JSON et l'affichage de la version dans le tableau de bord, renforce l'authentification et l'analyse du protocole, et corrige le suivi des parts dupliquées et les files d'envoi lors des reconnexions au pool. L'action API permet d'activer ou de désactiver l'API JSON ; la plupart des points d'accès statistiques ne nécessitent pas d'authentification. La tâche sur la page de Bitcoin réserve désormais aussi de la place dans chaque bloc pour la coinbase de DATUM. Bitcoin doit être au moins en version 29.4:23, 30.3:23 ou 31.1:25, selon sa version majeure, ou Bitcoin Knots (pre-RDTS) 29.3:31 ; Bitcoin 28 n'est plus pris en charge. start-sdk mis à jour vers 3.1.0.
 
-DATUM Gateway lädt neu, sobald Ihr Bitcoin-Knoten neue RPC-Zugangsdaten ausgibt — was bei jedem Neustart geschieht. Dieses Neuladen wurde bisher ausgelöst, sobald der Knoten mit dem Herunterfahren *begann* — während dessen RPC bereits nicht mehr erreichbar war. DATUM Gateway wurde also gestoppt und startete gegen ein Backend, das noch nicht da war. Es lädt jetzt erst neu, wenn der Knoten wieder läuft und neue Zugangsdaten veröffentlicht hat.
-
-- „Passwort zurücksetzen“ fragt nach einer Bestätigung, bevor das aktuelle Admin-Passwort ersetzt wird.
-- Die Belohnungsteilung in der Aktion „Datum“ erklärt jede Option, und mehrere Einstellungsbeschreibungen sind klarer.
-- Bitcoin wird als erforderliche Abhängigkeit aufgeführt.
-- Der Netzwerkport 23335, den die StartOS-0.3.5-Version dieses Pakets belegt gelassen hatte, wird freigegeben.
-- Bitcoin muss je nach Hauptversion mindestens 28.4:29, 29.4:16, 30.3:16 oder 31.1:16 sein. Bitcoin Knots (pre-RDTS) ab 29.3:29 funktioniert ebenfalls.`,
-    pl_PL: `Zapobiega przeładowaniu DATUM Gateway dokładnie w chwili, gdy znika Twój węzeł Bitcoin.
-
-DATUM Gateway przeładowuje się, gdy Twój węzeł Bitcoin wydaje nowe dane uwierzytelniające RPC, co robi przy każdym restarcie. Dotąd to przeładowanie uruchamiało się, gdy tylko węzeł *zaczynał* się wyłączać — a jego RPC było już nieosiągalne — więc DATUM Gateway było zatrzymywane i startowało wobec backendu, którego jeszcze nie było. Teraz przeładowuje się dopiero wtedy, gdy węzeł wróci i opublikuje nowe dane uwierzytelniające.
-
-- „Zresetuj hasło” prosi o potwierdzenie przed zastąpieniem bieżącego hasła administratora.
-- Wybór podziału nagród w akcji Datum objaśnia każdą opcję, a kilka opisów ustawień jest jaśniejszych.
-- Bitcoin jest wymieniony jako wymagana zależność.
-- Port sieciowy 23335, który wersja tego pakietu dla StartOS 0.3.5 pozostawiła zajęty, zostaje zwolniony.
-- Bitcoin musi być co najmniej w wersji 28.4:29, 29.4:16, 30.3:16 lub 31.1:16, zależnie od wersji głównej. Działa też Bitcoin Knots (pre-RDTS) 29.3:29 lub nowszy.`,
-    fr_FR: `Empêche DATUM Gateway de se recharger au moment précis où votre nœud Bitcoin disparaît.
-
-DATUM Gateway se recharge lorsque votre nœud Bitcoin émet de nouveaux identifiants RPC, ce qu'il fait à chaque redémarrage. Ce rechargement était jusqu'ici déclenché dès que le nœud *commençait* à s'arrêter — alors que son RPC était déjà injoignable —, si bien que DATUM Gateway était arrêté puis redémarré face à un backend encore absent. Il ne se recharge désormais qu'une fois le nœud revenu et de nouveaux identifiants publiés.
-
-- Réinitialiser le mot de passe demande une confirmation avant de remplacer le mot de passe administrateur actuel.
-- Le choix du partage des récompenses de l'action Datum explique chaque option, et plusieurs descriptions de réglages sont plus claires.
-- Bitcoin est indiqué comme dépendance requise.
-- Le port réseau 23335, que la version de ce paquet pour StartOS 0.3.5 avait laissé réservé, est libéré.
-- Bitcoin doit être au moins en version 28.4:29, 29.4:16, 30.3:16 ou 31.1:16, selon sa version majeure. Bitcoin Knots (pre-RDTS) 29.3:29 ou plus récent fonctionne aussi.`,
+[Notes de version complètes du projet d'origine](https://github.com/OCEAN-xyz/datum_gateway/releases/tag/v0.5.0beta)`,
   },
   migrations: {
-    up: async ({ effects }) => {
-      await sdk.MultiHost.of(effects, stratumHostId).retirePort(23335)
-    },
+    up: async () => {},
     down: IMPOSSIBLE,
   },
 })

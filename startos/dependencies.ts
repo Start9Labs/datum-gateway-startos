@@ -11,7 +11,7 @@ const bitcoind = sdk.Dependency.required('bitcoind', {
     icon: 'https://raw.githubusercontent.com/Start9Labs/bitcoin-core-startos/feec0b1dae42961a257948fe39b40caf8672fce1/dep-icon.svg',
   },
   versionRange:
-    '(>=28.4:29 && <29) || (>=29.4:16 && <30) || (>=30.3:16 && <31) || >=31.1:16 || >=#knotsprerdts:29.3:29',
+    '(>=29.4:23 && <30) || (>=30.3:23 && <31) || >=31.1:25 || >=#knotsprerdts:29.3:31',
   kind: 'running',
   healthChecks: ['bitcoind'],
 }).withInit(async (effects) => {
@@ -22,15 +22,18 @@ const bitcoind = sdk.Dependency.required('bitcoind', {
   const notifyBase = await ownUiUrl(effects)
   if (notifyBase) {
     const blocknotify = `curl -s -m5 ${notifyBase}/NOTIFY`
+    const blockreservedweight = 66_000
 
     await sdk.action.createTask(effects, 'bitcoind', autoconfig, 'critical', {
       input: {
         kind: 'partial',
-        accept: [{ blocknotify }],
-        set: { blocknotify },
+        accept: [{ blocknotify, blockreservedweight }],
+        set: { blocknotify, blockreservedweight },
       },
       when: { condition: 'input-not-matches', once: false },
-      reason: i18n('Datum requires a particular blocknotify url'),
+      reason: i18n(
+        'Datum requires a particular blocknotify url and enough block weight reserved for its coinbase',
+      ),
     })
   }
 })

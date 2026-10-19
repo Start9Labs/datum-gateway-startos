@@ -22,7 +22,7 @@ export default {
     23: 'Pointez vos ASICs ici!',
 
     // dependencies.ts
-    30: 'Datum requiert que le paramètre blocknotify contienne une valeur spécifique',
+    30: 'Datum requiert que le paramètre blocknotify contienne une valeur spécifique et que suffisamment de poids de bloc soit réservé à sa coinbase',
 
     // taskResetPassword.ts
     40: "Vous devez définir un mot de passe administrateur pour accéder à l'interface web de Datum Gateway",
@@ -115,6 +115,9 @@ export default {
     277: 'Incluez toujours mon paiement datum.pool_username dans mes blocs si possible.',
     278: 'Partage collaboratif des récompenses (minage en pool)',
     279: "- require : minage uniquement via le pool. Si le pool est injoignable, Datum Gateway déconnecte vos mineurs.\n- prefer : minage via le pool, et en solo tant que le pool est injoignable.\n- never : minage en solo. Tout bloc trouvé paie l'adresse Bitcoin des Réglages du minage.",
+
+    281: "Activer l'API JSON",
+    282: "Expose les points d'accès JSON sur l'interface Web UI. La plupart des statistiques ne nécessitent pas d'authentification. La désactivation laisse le tableau de bord et les notifications de blocs disponibles.",
 
     // common
     1000: 'Doit être alphanumérique.',

@@ -5,6 +5,13 @@ import { sdk } from '../../sdk'
 const { InputSpec, Value } = sdk
 
 const inputSpec = InputSpec.of({
+  json_api: Value.toggle({
+    name: i18n('Enable JSON API'),
+    default: true,
+    description: i18n(
+      'Expose JSON endpoints on the Web UI interface. Most statistics do not require authentication. Disabling this leaves the dashboard and block notifications available.',
+    ),
+  }),
   allow_insecure_auth: Value.toggle({
     name: i18n('Allow Insecure Authentication'),
     default: false,
@@ -29,7 +36,7 @@ export const apiConfig = sdk.Action.withInput(
 
   inputSpec,
 
-  async ({ effects }) => configJson.read((c) => c?.api).const(effects),
+  async ({ effects }) => configJson.read((c) => c.api).once(),
 
   ({ effects, input }) => configJson.merge(effects, { api: input }),
 )

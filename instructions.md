@@ -3,6 +3,7 @@
 ## Documentation
 
 - [OCEAN Datum documentation](https://ocean.xyz/docs) — upstream guide to DATUM, pool mining on OCEAN, and miner setup.
+- [JSON API reference](https://github.com/OCEAN-xyz/datum_gateway/blob/v0.5.0beta/doc/json_api.md) — endpoints, authentication, and statistics.
 
 ## What you get on StartOS
 
@@ -48,5 +49,5 @@ Open the **Web UI** interface and log in with the admin password from setup. The
 - **Mining Settings** — payout Bitcoin address, primary/secondary coinbase tags, coinbase unique ID.
 - **Stratum Server Settings** — thread and client limits, vardiff tuning, stale-share window, miner fingerprinting, and **Username modifiers** for splitting shares across multiple Bitcoin addresses by percentage (per modifier, splits must sum to 100).
 - **Bitcoin RPC settings** — how often Bitcoin sends updated templates.
-- **API** — toggle **Allow Insecure Authentication** if your browser (Safari) refuses to authenticate against the dashboard otherwise.
+- **API** — **Enable JSON API** controls JSON endpoints on the Web UI interface and is enabled by default. Most statistics can be read without authentication, so limit Web UI access to trusted users. You can disable the JSON API without affecting the dashboard or Bitcoin block notifications. Toggle **Allow Insecure Authentication** if your browser (Safari) refuses to authenticate against the dashboard otherwise.
 - **Logger** — console and file log levels, optional log file path.

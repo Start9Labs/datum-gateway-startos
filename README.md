@@ -97,7 +97,9 @@ Two interfaces: one for you, one for your miners.
 
 Both are bound on their own hosts — `main` and `mining` — so the dashboard and the miner-facing endpoint can be exposed independently. The stratum binding is plain TCP with no TLS, which is what stratum clients expect.
 
-The StartOS 0.3.5 package bound stratum on port 23335 of the `mining` host. Updating to `0.4.1:16` or later retires that binding, freeing its port; nothing listens there any more.
+Stratum uses port 23334; port 23335 is not reserved by this package.
+
+The Web UI listener also serves upstream's JSON API when **Enable JSON API** is on in the API action (the upstream default). For example, `GET /v1/stratum_server_info` returns subscription counts and estimated hashrate in TH/s. Most statistics are unauthenticated; `/v1/stratum_client_list` and `/v1/configuration` require HTTP Digest authentication as `admin`. Configuration writes additionally require `api.modify_conf` (disabled by upstream default) and the startup-specific CSRF token. Disabling the JSON API leaves the HTML dashboard, its statistics-based health checks, and `/NOTIFY` available. See the [upstream JSON API reference](https://github.com/OCEAN-xyz/datum_gateway/blob/v0.5.0beta/doc/json_api.md).
 
 ## Installation and First-Run Flow
 
@@ -105,7 +107,7 @@ Install writes the config file with its defaults and starts the daemon. Two thin
 
 A third piece of setup happens on Bitcoin rather than here: the node has to be told to notify the gateway on each new block, which is raised as a task on Bitcoin's own page as soon as the gateway's address is resolvable.
 
-Once all three are done the gateway is mining — solo by default configuration, or through a pool if you change the Datum settings.
+Once all three are done the gateway can mine through OCEAN by default, or solo if you change the Datum settings.
 
 ## Actions
 
@@ -119,7 +121,7 @@ Six actions grouped under Config, each writing its own section of the config fil
 - **Datum** chooses between requiring collaborative reward sharing, preferring it, or never sharing — see [File Models](#file-models) for how that maps onto upstream's two fields — along with the pool's host, port, and public key. Defaults here point at OCEAN; changing them switches pool or moves to solo mining.
 - **Stratum** tunes what miners see: client limits, variable difficulty, idle timeouts, and per-username payout splitting.
 - **Bitcoin RPC settings** carries the template refresh interval.
-- **API** carries one setting: whether to allow insecure dashboard authentication, which some browsers require and which lowers the login's security.
+- **API** controls whether the JSON API is enabled, and whether to allow insecure dashboard authentication, which some browsers require and which lowers the login's security.
 - **Logger** carries console and file log levels and the log file path.
 
 ### Create / Reset Password

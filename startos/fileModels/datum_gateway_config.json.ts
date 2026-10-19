@@ -59,6 +59,7 @@ const apiShape = z.looseObject({
   // Configurable
   admin_password: z.string().catch(''),
   allow_insecure_auth: optBoolean,
+  json_api: optBoolean,
 })
 
 const loggerShape = z.looseObject({

@@ -116,6 +116,9 @@ const dict = {
   'Collaborative reward sharing (pooled mining)': 278,
   '- require: mine through the pool only. If the pool is unreachable, Datum Gateway disconnects your miners.\n- prefer: mine through the pool, and mine solo while the pool is unreachable.\n- never: mine solo. Any block you find pays the Bitcoin Address in Mining Settings.': 279,
 
+  'Enable JSON API': 281,
+  'Expose JSON endpoints on the Web UI interface. Most statistics do not require authentication. Disabling this leaves the dashboard and block notifications available.': 282,
+
   // common
   'Must be alphanumeric.': 1000,
 } as const

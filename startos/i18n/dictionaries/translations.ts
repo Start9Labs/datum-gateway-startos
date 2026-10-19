@@ -116,6 +116,9 @@ export default {
     278: 'Partage collaboratif des récompenses (minage en pool)',
     279: "- require : minage uniquement via le pool. Si le pool est injoignable, Datum Gateway déconnecte vos mineurs.\n- prefer : minage via le pool, et en solo tant que le pool est injoignable.\n- never : minage en solo. Tout bloc trouvé paie l'adresse Bitcoin des Réglages du minage.",
 
+    281: "Activer l'API JSON",
+    282: "Expose les points d'accès JSON sur l'interface Web UI. La plupart des statistiques ne nécessitent pas d'authentification. La désactivation laisse le tableau de bord et les notifications de blocs disponibles.",
+
     // common
     1000: 'Doit être alphanumérique.',
   },

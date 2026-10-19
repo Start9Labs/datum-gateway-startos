@@ -170,7 +170,7 @@ Four checks. Two report health; two report numbers.
 The `main` volume is copied wholesale — `sdk.Backups.ofVolumes('main')`. No dump step and nothing excluded.
 
 - **Included:** the config file, and with it the payout address, the pool settings, and the dashboard password.
-- **Restore:** complete, and no task is raised, because the password and address arrive with the backup. Bitcoin's notify and reservation settings are not part of this package's backup — if the restored server's Bitcoin node does not carry it, the task raises again there.
+- **Restore:** complete, and no task is raised, because the password and address arrive with the backup. Bitcoin's notify and reservation settings are not part of this package's backup — if the restored server's Bitcoin node does not carry them, the task raises again there.
 
 ## Limitations and Differences
 

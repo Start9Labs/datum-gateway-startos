@@ -17,7 +17,7 @@ Datum Gateway is built from source by the `Dockerfile` at the repo root. The ups
 
 ## Version mapping and review scope
 
-This package deliberately follows upstream's public-beta release line. Upstream tags use a suffix without a hyphen, such as `v0.5.0beta`; preserve it in ExVer as `0.5.0-beta:0`. Reset the wrapper revision to zero on each upstream bump.
+This package deliberately follows upstream's public-beta release line. Upstream tags use a suffix without a hyphen, such as `v0.5.0beta`; preserve it in ExVer as `0.5.0-beta:0`.
 
 Treat `0.x` minor jumps as major-review scope. Check the new source's configuration table, listeners, dashboard statistics, RPC cookie handling, persistent paths, and Bitcoin requirements. Upstream's node configuration (`doc/INSTALL.md`) is mirrored by the Auto-Configure task in `startos/dependencies.ts`; when it changes, change the task, and raise the Bitcoin floors in `versionRange` if Bitcoin must expose a new setting first.
 
@@ -32,5 +32,4 @@ Treat `0.x` minor jumps as major-review scope. Check the new source's configurat
   git add datum_gateway
   ```
 
-- Update `startos/versions/current.ts` and its localized release notes. Preserve any outgoing migration in a version-named file and register it in `startos/versions/index.ts`.
 - Copy the pinned upstream `LICENSE` to the package root when it changes.

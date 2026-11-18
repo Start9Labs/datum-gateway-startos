@@ -1,6 +1,6 @@
 import { FileHelper } from '@start9labs/start-sdk'
 import { manifest } from 'bitcoin-core-startos/startos/manifest'
-import { rpcSubpath } from 'bitcoin-core-startos/startos/utils'
+import { rpcVolumeId } from 'bitcoin-core-startos/startos/utils'
 import { configJson } from './fileModels/datum_gateway_config.json'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
@@ -44,8 +44,8 @@ export const main = sdk.setupMain(async ({ effects }) => {
       })
       .mountDependency<typeof manifest>({
         dependencyId: 'bitcoind',
-        volumeId: 'main',
-        subpath: rpcSubpath,
+        volumeId: rpcVolumeId,
+        subpath: null,
         mountpoint: knotsMountpoint,
         readonly: true,
       }),

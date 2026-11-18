@@ -52,7 +52,7 @@ One volume, plus a read-only view of the Bitcoin node's.
 | ------ | ----------- | -------------------------------------------------- |
 | `main` | `/root`     | `data/datum_gateway_config.json`, and any log file |
 
-Only Bitcoin's `rpc/` directory, which holds its RPC cookie, is mounted **read-only** at `/mnt/knots` — not its data directory or wallets, and no credential is stored anywhere in this package.
+Only Bitcoin's `public` volume, which holds a copy of its RPC cookie, is mounted **read-only** at `/mnt/knots` — not its data directory or wallets, and no credential is stored anywhere in this package.
 
 ## File Models
 
@@ -76,9 +76,9 @@ Stratum username modifiers are also reshaped: the file stores them as nested obj
 
 One, and it is required.
 
-| Dependency | Kind      | Health check | Mount                                 | Why                                          |
-| ---------- | --------- | ------------ | ------------------------------------- | -------------------------------------------- |
-| Bitcoin    | `running` | `bitcoind`   | `/mnt/knots`, read-only (`rpc/` only) | Block templates over RPC, and the RPC cookie |
+| Dependency | Kind      | Health check | Mount                                          | Why                                          |
+| ---------- | --------- | ------------ | ---------------------------------------------- | -------------------------------------------- |
+| Bitcoin    | `running` | `bitcoind`   | `/mnt/knots`, read-only (`public` volume only) | Block templates over RPC, and the RPC cookie |
 
 The node's RPC address is resolved from its own binding over the service bridge, so a Bitcoin update does not move it and nothing is configured by hand.
 
@@ -199,7 +199,7 @@ file_models:
   - /root/data/datum_gateway_config.json
 startos_managed_env_vars: []
 dependencies:
-  - bitcoind # required; its rpc/ directory mounted read-only at /mnt/knots
+  - bitcoind # required; its public volume mounted read-only at /mnt/knots
 interfaces:
   ui: { type: ui, port: 7152 }
   stratum: { type: api, port: 23334 }

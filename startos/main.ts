@@ -1,11 +1,13 @@
 import { FileHelper } from '@start9labs/start-sdk'
 import { manifest } from 'bitcoin-core-startos/startos/manifest'
+import { rpcVolumeId } from 'bitcoin-core-startos/startos/utils'
 import { configJson } from './fileModels/datum_gateway_config.json'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
 import {
   bitcoindRpcUrl,
   dataDir,
+  knotsCookie,
   knotsMountpoint,
   stratumPort,
   uiPort,
@@ -42,7 +44,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
       })
       .mountDependency<typeof manifest>({
         dependencyId: 'bitcoind',
-        volumeId: 'main',
+        volumeId: rpcVolumeId,
         subpath: null,
         mountpoint: knotsMountpoint,
         readonly: true,
@@ -54,7 +56,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
 
   // Restart the daemon chain only when bitcoind writes a replacement cookie —
   // an absent cookie means bitcoind is down.
-  await FileHelper.string(`${rootfs}${knotsMountpoint}/.cookie`)
+  await FileHelper.string(`${rootfs}${knotsCookie}`)
     .read(
       (cookie) => cookie,
       (prev, next) => next === null || prev === next,

@@ -1,5 +1,6 @@
 import { T } from '@start9labs/start-sdk'
 import {
+  rpcCookieName,
   rpcHostId as btcRpcHostId,
   rpcPort,
 } from 'bitcoin-core-startos/startos/utils'
@@ -10,6 +11,7 @@ export const stratumPort = 23334
 
 export const dataDir = '/data'
 export const knotsMountpoint = '/mnt/knots'
+export const knotsCookie = `${knotsMountpoint}/${rpcCookieName}`
 
 // Host ids (the sdk.MultiHost.of groups) — distinct from the interface ids exported on them.
 export const uiHostId = 'main'

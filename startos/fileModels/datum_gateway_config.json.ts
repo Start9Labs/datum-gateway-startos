@@ -1,5 +1,5 @@
 import { FileHelper, z } from '@start9labs/start-sdk'
-import { dataDir, knotsMountpoint, stratumPort, uiPort } from '../utils'
+import { dataDir, knotsCookie, stratumPort, uiPort } from '../utils'
 import { sdk } from '../sdk'
 
 const optString = z.string().optional().catch(undefined)
@@ -8,9 +8,7 @@ const optBoolean = z.boolean().optional().catch(undefined)
 
 const bitcoindShape = z.looseObject({
   // Enforced
-  rpccookiefile: z
-    .literal(`${knotsMountpoint}/.cookie`)
-    .catch(`${knotsMountpoint}/.cookie`),
+  rpccookiefile: z.literal(knotsCookie).catch(knotsCookie),
   // Address is dynamic (bitcoind's RPC over the LXC bridge); pinned in main.ts,
   // absent until the dependency resolves.
   rpcurl: z.string().optional().catch(undefined),

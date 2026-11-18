@@ -11,7 +11,7 @@ const bitcoind = sdk.Dependency.required('bitcoind', {
     icon: 'https://raw.githubusercontent.com/Start9Labs/bitcoin-core-startos/feec0b1dae42961a257948fe39b40caf8672fce1/dep-icon.svg',
   },
   versionRange:
-    '(>=29.4:23 && <30) || (>=30.3:23 && <31) || >=31.1:25 || >=#knotsprerdts:29.3:31',
+    '(>=29.5:4 && <30) || (>=30.4:4 && <31) || >=31.2:4 || >=#knotsprerdts:29.3:33 || >=#roots:29.4:1',
   kind: 'running',
   healthChecks: ['bitcoind'],
 }).withInit(async (effects) => {

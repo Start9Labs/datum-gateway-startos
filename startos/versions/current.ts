@@ -1,18 +1,18 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.5.1-beta:2',
+  version: '0.5.1-beta:3',
   releaseNotes: {
     en_US:
-      "Requires StartOS 0.4.1 or later. Update Bitcoin first: Datum Gateway can now read only Bitcoin's RPC credential, not its data directory or wallets.",
+      'Removed the Trust PROXY option from Stratum Server Settings, which has no use on StartOS. Installs that had it set are returned to the default.',
     es_ES:
-      'Requiere StartOS 0.4.1 o posterior. Actualiza Bitcoin primero: Datum Gateway ahora solo puede leer la credencial RPC de Bitcoin, no su directorio de datos ni sus billeteras.',
+      'Se eliminó la opción Trust PROXY de Stratum Server Settings, que no tiene uso en StartOS. Las instalaciones que la tenían configurada vuelven al valor predeterminado.',
     de_DE:
-      'Erfordert StartOS 0.4.1 oder neuer. Aktualisiere zuerst Bitcoin: Datum Gateway kann jetzt nur noch die RPC-Zugangsdaten von Bitcoin lesen, nicht sein Datenverzeichnis oder seine Wallets.',
+      'Die Option Trust PROXY wurde aus Stratum Server Settings entfernt, da sie unter StartOS keinen Nutzen hat. Installationen, die sie gesetzt hatten, werden auf den Standardwert zurückgesetzt.',
     pl_PL:
-      'Wymaga StartOS 0.4.1 lub nowszego. Najpierw zaktualizuj Bitcoin: Datum Gateway może teraz odczytać tylko poświadczenie RPC Bitcoina, a nie jego katalog danych ani portfele.',
+      'Usunięto opcję Trust PROXY z Stratum Server Settings, która nie ma zastosowania w StartOS. Instalacje, w których była ustawiona, wracają do wartości domyślnej.',
     fr_FR:
-      "Nécessite StartOS 0.4.1 ou une version ultérieure. Mettez d'abord Bitcoin à jour : Datum Gateway ne peut désormais lire que l'identifiant RPC de Bitcoin, et non son répertoire de données ni ses portefeuilles.",
+      "Suppression de l'option Faire confiance à PROXY des Réglages du serveur Stratum, sans utilité sur StartOS. Les installations qui l'avaient définie reviennent à la valeur par défaut.",
   },
   migrations: {
     up: async () => {},

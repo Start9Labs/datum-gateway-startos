@@ -62,7 +62,7 @@ One model, and it is the whole of the gateway's configuration.
 | -------------------------------- | ------ | ----------------------- | ------------------------------------ |
 | `data/datum_gateway_config.json` | JSON   | Yes — `FileHelper.json` | Every init, `main`, and every action |
 
-**Enforced** — rewritten to a fixed value whenever the package writes the file: `bitcoind.rpccookiefile`, `stratum.listen_addr` and `listen_port`, `api.listen_addr` and `listen_port`, and `logger.log_to_stderr`. `bitcoind.rpcuser` and `bitcoind.rpcpassword` are modelled as "must be absent" and deleted if present — authentication is the cookie.
+**Enforced** — rewritten to a fixed value whenever the package writes the file: `bitcoind.rpccookiefile`, `stratum.listen_addr` and `listen_port`, `api.listen_addr` and `listen_port`, and `logger.log_to_stderr`. `bitcoind.rpcuser` and `bitcoind.rpcpassword` are modelled as "must be absent" and deleted if present — authentication is the cookie. `stratum.trust_proxy` is too, so the stratum server never accepts PROXY protocol headers: nothing on StartOS forwards miner connections with one.
 
 **Derived:** `bitcoind.rpcurl` is written by `main` from the node's own binding on every start. While Bitcoin is absent the key is omitted rather than filled with a dead address, so the connection fails honestly and heals when the node returns.
 
@@ -119,7 +119,7 @@ Six actions grouped under Config, each writing its own section of the config fil
 
 - **Mining Settings** carries the payout address and the coinbase tags. The address is the one field that must be set for the gateway to be useful.
 - **Datum** chooses between requiring collaborative reward sharing, preferring it, or never sharing — see [File Models](#file-models) for how that maps onto upstream's two fields — along with the pool's host, port, and public key. Defaults here point at OCEAN; changing them switches pool or moves to solo mining.
-- **Stratum** tunes what miners see: client limits, variable difficulty, idle timeouts, and per-username payout splitting.
+- **Stratum** tunes what miners see: client limits, variable difficulty, the stale-share window, miner fingerprinting, and per-username payout splitting.
 - **Bitcoin RPC settings** carries the template refresh interval.
 - **API** controls whether the JSON API is enabled, and whether to allow insecure dashboard authentication, which some browsers require and which lowers the login's security.
 - **Logger** carries console and file log levels and the log file path.

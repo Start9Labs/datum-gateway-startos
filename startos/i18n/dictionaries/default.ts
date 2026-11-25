@@ -56,8 +56,6 @@ const dict = {
   'Max Threads': 212,
   'Max Clients': 214,
   'Maximum total Stratum clients before rejecting connections': 215,
-  'Trust PROXY': 216,
-  'Enables the PROXY protocol, trusting up to this many levels of proxies in front of your miners. -1 disables it.': 217,
   'Minimum Difficulty': 218,
   'Target Shares per Minute': 220,
   'Adjust work difficulty to target this many shares per minute': 221,

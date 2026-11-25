@@ -56,8 +56,6 @@ export default {
     212: 'Nombre maximum de Thread',
     214: 'Nombre maximum de clients',
     215: 'Nombre maximum de clients stratum avant de rejeter les connections',
-    216: 'Faire confiance à PROXY',
-    217: 'Active le protocole PROXY en faisant confiance à ce nombre de niveaux de proxys devant vos mineurs. -1 le désactive.',
     218: 'Difficulté minimum',
     220: 'Cible de shares par minute',
     221: 'Ajustez la difficulté de travail pour viser ce nombre de shares par minute',

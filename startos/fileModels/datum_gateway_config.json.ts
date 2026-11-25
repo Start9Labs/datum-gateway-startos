@@ -23,11 +23,11 @@ const stratumShape = z.looseObject({
   // Enforced
   listen_addr: z.literal('').catch(''),
   listen_port: z.literal(stratumPort).catch(stratumPort),
+  trust_proxy: z.undefined().catch(undefined),
   // Configurable
   max_clients_per_thread: optNumber,
   max_threads: optNumber,
   max_clients: optNumber,
-  trust_proxy: optNumber,
   vardiff_min: optNumber,
   vardiff_target_shares_min: optNumber,
   vardiff_quickdiff_count: optNumber,

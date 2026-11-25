@@ -35,17 +35,6 @@ const inputSpec = InputSpec.of({
     integer: true,
     min: 0,
   }),
-  trust_proxy: Value.number({
-    name: i18n('Trust PROXY'),
-    description: i18n(
-      'Enables the PROXY protocol, trusting up to this many levels of proxies in front of your miners. -1 disables it.',
-    ),
-    required: false,
-    default: null,
-    placeholder: '-1',
-    integer: true,
-    min: -1,
-  }),
   vardiff_min: Value.number({
     name: i18n('Minimum Difficulty'),
     description: null,
